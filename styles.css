@@ -9,7 +9,7 @@ body {
   color: white;
   font-family: Arial, sans-serif;
 }
-
+/* Header content */
 .header {
   display: flex;
   align-items: center;
@@ -32,8 +32,97 @@ body {
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+  opacity: 0.9;
 }
 
 .btn:hover {
-  background-color: #004ecc;
+  opacity: 1;
+}
+/* Log In content  */
+.container {
+  padding: 1.6rem;
+}
+input[type="email"],
+input[type="pass"] {
+  width: 100%;
+  padding: 1.5rem;
+  display: inline-block;
+  border: none;
+  margin: 0.5rem 0 2.2rem 0;
+  background: white;
+  border-radius: 15px;
+}
+
+input[type="email"]:focus,
+input[type="pass"]:focus {
+  background: #daeeff;
+  outline: none;
+}
+h1 {
+  font-size: 2.4rem;
+}
+p {
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+label {
+  font-size: 1.2rem;
+}
+button[type="button"] {
+  background-color: forestgreen;
+  color: #fff;
+  padding: 1.3rem 2rem;
+  margin: 0.8rem 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.8;
+  border-radius: 15px;
+}
+
+button[type="button"]:hover {
+  opacity: 1;
+}
+button.cancelBtn {
+  background-color: #d41919;
+}
+.buttons {
+  display: flex;
+}
+.log-in {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0, 0.7);
+  padding-top: 3.5rem;
+}
+
+.login-content {
+  background-color: #181c24;
+  margin: 5% auto 15% auto;
+  width: 50%;
+  border-radius: 15px;
+}
+hr {
+  border: 0.1rem solid #f1f1f1;
+  margin: 1rem 0;
+}
+
+.close {
+  position: absolute;
+  right: 26rem;
+  top: 9rem;
+  font-size: 4rem;
+  font-weight: 400;
+  color: #f1f1f1;
+}
+.close:hover,
+.close:focus {
+  color: #d41919;
+  cursor: pointer;
 }
