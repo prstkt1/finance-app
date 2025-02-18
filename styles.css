@@ -68,7 +68,7 @@ p {
 label {
   font-size: 1.2rem;
 }
-button[type="button"] {
+button[class="loginlBtn"] {
   background-color: forestgreen;
   color: #fff;
   padding: 1.3rem 2rem;
@@ -79,12 +79,19 @@ button[type="button"] {
   opacity: 0.8;
   border-radius: 15px;
 }
-
+button[class="cancelBtn"] {
+  background-color: #d41919;
+  color: #fff;
+  padding: 1.3rem 2rem;
+  margin: 0.8rem 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.8;
+  border-radius: 15px;
+}
 button[type="button"]:hover {
   opacity: 1;
-}
-button.cancelBtn {
-  background-color: #d41919;
 }
 .buttons {
   display: flex;
