@@ -54,7 +54,7 @@ input[type="password"] {
 }
 
 input[type="email"]:focus,
-input[type="pass"]:focus {
+input[type="password"] :focus {
   background: #daeeff;
   outline: none;
 }
