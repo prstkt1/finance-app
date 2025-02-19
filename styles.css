@@ -43,7 +43,7 @@ body {
   padding: 1.6rem;
 }
 input[type="email"],
-input[type="pass"] {
+input[type="password"] {
   width: 100%;
   padding: 1.5rem;
   display: inline-block;
