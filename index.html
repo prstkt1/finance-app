@@ -69,5 +69,32 @@
         </div>
       </form>
     </div>
+    <div class="expenses-container">
+      <h2>Your Expenses</h2>
+      <ul id="expenses"></ul>
+    </div>
+    <div class="add-expense">
+      <h2>Add New Expense</h2>
+      <form action="#" id="form">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Enter the name of the expense"
+          required
+          autocomplete="off"
+        />
+        <label for="amount">Amount</label>
+        <input
+          type="number"
+          id="amount"
+          name="amount"
+          placeholder="Enter the amount of the expense"
+          required
+          autocomplete="off"
+        />
+        <button type="button" class="addBtn" onclick="addExpense()">Add</button>
+      </form>
   </body>
 </html>
