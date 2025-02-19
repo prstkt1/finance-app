@@ -25,6 +25,7 @@ body {
 }
 
 .btn {
+  display: block;
   background-color: #0061ff;
   color: white;
   border: none;
@@ -114,6 +115,7 @@ button[type="button"]:hover {
   margin: 5% auto 15% auto;
   width: 50%;
   border-radius: 15px;
+  position: relative;
 }
 hr {
   border: 0.1rem solid #f1f1f1;
@@ -127,6 +129,9 @@ hr {
   font-size: 4rem;
   font-weight: 400;
   color: #f1f1f1;
+  right: 1rem;
+  top: 1rem;
+  font-size: 2rem;
 }
 .close:hover,
 .close:focus {
