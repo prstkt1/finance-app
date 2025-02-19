@@ -68,8 +68,8 @@ p {
 label {
   font-size: 1.2rem;
 }
-button[class="loginlBtn"] {
-  background-color: forestgreen;
+button[class="loginBtn"] {
+  background-color: #003cff;
   color: #fff;
   padding: 1.3rem 2rem;
   margin: 0.8rem 0;
@@ -79,8 +79,8 @@ button[class="loginlBtn"] {
   opacity: 0.8;
   border-radius: 15px;
 }
-button[class="cancelBtn"] {
-  background-color: #d41919;
+button[class="registerBtn"] {
+  background-color: #002da8;
   color: #fff;
   padding: 1.3rem 2rem;
   margin: 0.8rem 0;
