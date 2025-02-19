@@ -1,6 +1,92 @@
+// Log in button
 function toggleForm() {
-  let form = document.getElementById("log-in");
-  form.style.display = form.style.display === "block" ? "none" : "block";
+  let loginForm = document.getElementById("log-in");
+  let loginButton = document.getElementById("login-button");
+  loginForm.style.display =
+    loginForm.style.display === "block" ? "none" : "block";
+  loginButton.style.display =
+    loginButton.style.display === "none" ? "block" : "none";
 }
-// document.getElementById('log-in').style.display='none'
-// document.getElementById('log-in').style.display='block'
+// Login-Registration
+function register() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("pass").value;
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+
+  if (users[email]) {
+    alert("Такой пользователь уже существует!");
+  } else {
+    users[email] = {
+      password: password,
+      expenses: [],
+    };
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("Регистрация успешна!");
+    localStorage.setItem("currentUser", email);
+    toggleForm();
+    showExpenses();
+  }
+}
+
+// Авторизация
+function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("pass").value;
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+
+  if (users[email] && users[email].password === password) {
+    alert("Вход выполнен!");
+    localStorage.setItem("currentUser", email);
+    toggleForm();
+    showExpenses();
+  } else {
+    alert("Неверный логин или пароль!");
+  }
+}
+
+// Проверка авторизации
+document.addEventListener("DOMContentLoaded", function () {
+  const currentUser = localStorage.getItem("currentUser");
+  if (currentUser) {
+    showExpenses();
+  }
+});
+
+function showExpenses() {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+  let expenses = users[currentUser].expenses;
+
+  let expensesList = document.getElementById("expenses");
+  expensesList.innerHTML = "";
+
+  for (let i = 0; i < expenses.length; i++) {
+    let expense = expenses[i];
+    let item = document.createElement("li");
+    item.textContent = `${expense.name} - ${expense.amount} usd.`;
+    expensesList.appendChild(item);
+  }
+}
+
+function addExpense() {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+  let expenses = users[currentUser].expenses;
+
+  const name = document.getElementById("name").value;
+  const amount = document.getElementById("amount").value;
+
+  expenses.push({ name: name, amount: amount });
+  localStorage.setItem("users", JSON.stringify(users));
+  showExpenses();
+}
