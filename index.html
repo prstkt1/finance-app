@@ -22,13 +22,13 @@
         <a href="#">adada</a>
         <a href="#">adaddad</a>
       </nav> -->
-      <div class="login-button">
+      <div class="login-button" id="login-button">
         <button class="btn" onclick="toggleForm()">Log In</button>
       </div>
     </header>
     <div class="log-in" id="log-in">
-      <span class="close" onclick="toggleForm()">&times;</span>
       <form action="#" class="login-content">
+        <span class="close" onclick="toggleForm()">&times;</span>
         <div class="container">
           <h1>Log In</h1>
           <hr />
@@ -50,7 +50,7 @@
             required
             autocomplete="off"
           />
-          <label for="#">
+          <label for="remember">
             <input type="checkbox" name="remember" id="remember" checked />
             Remember me
           </label>
