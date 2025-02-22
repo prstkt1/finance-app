@@ -30,6 +30,7 @@ function register() {
   }
 }
 
+// Красивый алерт
 function showAlert(message) {
   const alert = document.getElementById("better_alert");
   alert.textContent = message;
@@ -68,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadCustomSelectOptions();
 });
 
+// Вывод списка расходов
 function showExpenses() {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -88,6 +90,7 @@ function showExpenses() {
   }
 }
 
+// Добавление расхода
 function addExpense() {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -107,6 +110,7 @@ function addExpense() {
   customSelect(name);
 }
 
+// Кастомный select
 function customSelect(newValue) {
   const dataList = document.getElementById("customSelect");
 
@@ -125,6 +129,7 @@ function customSelect(newValue) {
   }
 }
 
+// Загрузка кастомных опций
 function loadCustomSelectOptions() {
   const dataList = document.getElementById("customSelect");
   let customOptions = JSON.parse(localStorage.getItem("customOptions")) || [];
@@ -134,4 +139,28 @@ function loadCustomSelectOptions() {
     newOption.value = optionValue;
     dataList.appendChild(newOption);
   });
+}
+
+function totalExpense() {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+  let expenses = users[currentUser].expenses;
+
+  let total = 0;
+  for (let i = 0; i < expenses.length; i++) {
+    total += parseInt(expenses[i].amount);
+  }
+
+  let totalElement = document.getElementById("total");
+  totalElement.textContent = `Total: ${total} usd.`;
+}
+
+// Clear all
+function clearAll() {
+  localStorage.clear();
+  location.reload();
 }
