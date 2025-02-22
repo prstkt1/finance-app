@@ -79,13 +79,19 @@
       <form action="#" id="form">
         <label for="name">Name</label>
         <input
+          list="customSelect"
           type="text"
-          id="name"
+          id="customInput"
           name="name"
           placeholder="Enter the name of the expense"
           required
           autocomplete="off"
         />
+        <datalist id="customSelect">
+          <option value="Опция 1">
+          <option value="Опция 2">
+          <option value="Опция 3">
+        </datalist>
         <label for="amount">Amount</label>
         <input
           type="number"
