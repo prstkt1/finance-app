@@ -7,6 +7,7 @@ function toggleForm() {
   loginButton.style.display =
     loginButton.style.display === "none" ? "block" : "none";
 }
+
 // Login-Registration
 function register() {
   const email = document.getElementById("email").value;
@@ -64,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (currentUser) {
     showExpenses();
   }
+  loadCustomSelectOptions();
 });
 
 function showExpenses() {
@@ -95,10 +97,41 @@ function addExpense() {
   let users = JSON.parse(localStorage.getItem("users")) || {};
   let expenses = users[currentUser].expenses;
 
-  const name = document.getElementById("name").value;
+  const name = document.getElementById("customInput").value;
   const amount = document.getElementById("amount").value;
 
   expenses.push({ name: name, amount: amount });
   localStorage.setItem("users", JSON.stringify(users));
   showExpenses();
+
+  customSelect(name);
+}
+
+function customSelect(newValue) {
+  const dataList = document.getElementById("customSelect");
+
+  if (
+    newValue &&
+    !Array.from(dataList.options).some((opt) => opt.value === newValue)
+  ) {
+    let newOption = document.createElement("option");
+    newOption.value = newValue;
+    dataList.appendChild(newOption);
+
+    // Сохранение нового значения в localStorage
+    let customOptions = JSON.parse(localStorage.getItem("customOptions")) || [];
+    customOptions.push(newValue);
+    localStorage.setItem("customOptions", JSON.stringify(customOptions));
+  }
+}
+
+function loadCustomSelectOptions() {
+  const dataList = document.getElementById("customSelect");
+  let customOptions = JSON.parse(localStorage.getItem("customOptions")) || [];
+
+  customOptions.forEach((optionValue) => {
+    let newOption = document.createElement("option");
+    newOption.value = optionValue;
+    dataList.appendChild(newOption);
+  });
 }
