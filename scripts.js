@@ -15,18 +15,30 @@ function register() {
   let users = JSON.parse(localStorage.getItem("users")) || {};
 
   if (users[email]) {
-    alert("Такой пользователь уже существует!");
+    showAlert("Такой пользователь уже существует!");
   } else {
     users[email] = {
       password: password,
       expenses: [],
     };
     localStorage.setItem("users", JSON.stringify(users));
-    alert("Регистрация успешна!");
+    showAlert("Регистрация успешна!");
     localStorage.setItem("currentUser", email);
     toggleForm();
     showExpenses();
   }
+}
+
+function showAlert(message) {
+  const alert = document.getElementById("better_alert");
+  alert.textContent = message;
+  alert.classList.remove("hidden");
+  alert.classList.add("show");
+
+  setTimeout(() => {
+    alert.classList.remove("show");
+    alert.classList.add("hidden");
+  }, 3000);
 }
 
 // Авторизация
@@ -37,12 +49,12 @@ function login() {
   let users = JSON.parse(localStorage.getItem("users")) || {};
 
   if (users[email] && users[email].password === password) {
-    alert("Вход выполнен!");
+    showAlert("Вход выполнен!");
     localStorage.setItem("currentUser", email);
     toggleForm();
     showExpenses();
   } else {
-    alert("Неверный логин или пароль!");
+    showAlert("Неверный логин или пароль!");
   }
 }
 
