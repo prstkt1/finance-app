@@ -108,6 +108,7 @@ function addExpense() {
   showExpenses();
 
   customSelect(name);
+  clearForm();
 }
 
 // Кастомный select
@@ -141,6 +142,7 @@ function loadCustomSelectOptions() {
   });
 }
 
+// Подсчет общей суммы
 function totalExpense() {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -163,4 +165,10 @@ function totalExpense() {
 function clearAll() {
   localStorage.clear();
   location.reload();
+}
+
+// Очистка ввода
+function clearForm() {
+  document.getElementById("customInput").value = "";
+  document.getElementById("amount").value = "";
 }
