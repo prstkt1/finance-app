@@ -88,10 +88,11 @@
           autocomplete="off"
         />
         <datalist id="customSelect">
-          <option value="Опция 1">
-          <option value="Опция 2">
-          <option value="Опция 3">
+          <option value="Опция 1"></option>
+          <option value="Опция 2"></option>
+          <option value="Опция 3"></option>
         </datalist>
+
         <label for="amount">Amount</label>
         <input
           type="number"
@@ -103,5 +104,12 @@
         />
         <button type="button" class="addBtn" onclick="addExpense()">Add</button>
       </form>
+    </div>
+    <div class="total">
+      <h2>Total Expenses</h2>
+      <h3 id="total">0</h3>
+    </div>
+    <div class="clear">
+      <button type="button" class="clearBtn" onclick="clearAll()">Clear All</button>
   </body>
 </html>
