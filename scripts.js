@@ -101,11 +101,12 @@ function addExpense() {
   let expenses = users[currentUser].expenses;
 
   const name = document.getElementById("customInput").value;
-  const amount = document.getElementById("amount").value;
+  const amount = Math.abs(document.getElementById("amount").value);
 
   expenses.push({ name: name, amount: amount });
   localStorage.setItem("users", JSON.stringify(users));
   showExpenses();
+  totalExpense();
 
   customSelect(name);
   clearForm();
