@@ -1,10 +1,115 @@
-<link rel="stylesheet" href="styles.css" />
-<script src="scripts.js" defer></script>
-<div class="controls">
-  <button id="reload" type="button">Reload</button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Nikita" />
+    <meta
+      name="description"
+      content="Web application for financial management"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finance App</title>
+    <link rel="icon" type="images/x-icon" href="favicon/diagram_white.ico" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="scripts.js" defer></script>
+  </head>
+  <body onload="totalExpense()">
+    <div id="better_alert" class="hidden"></div>
+    <header class="header">
+      <div class="logo">Finance App</div>
 
-<div class="event-log">
-  <label>Event log:</label>
-  <textarea readonly class="event-log-contents" rows="8" cols="30"></textarea>
-</div>
+      <!-- кнопочки header
+      <nav class="nav">
+        <a href="#">adada</a>
+        <a href="#">adaddad</a>
+      </nav> -->
+      <div class="login-button" id="login-button">
+        <button class="btn" onclick="toggleForm()">Log In</button>
+      </div>
+    </header>
+    <div class="log-in" id="log-in">
+      <form action="#" class="login-content">
+        <span class="close" onclick="toggleForm()">&times;</span>
+        <div class="container">
+          <h1>Log In</h1>
+          <hr />
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+            autocomplete="off"
+          />
+          <label for="pass">Password</label>
+          <input
+            type="password"
+            id="pass"
+            name="pass"
+            placeholder="Enter your password"
+            required
+            autocomplete="off"
+          />
+          <label for="remember">
+            <input type="checkbox" name="remember" id="remember" checked />
+            Remember me
+          </label>
+          <p>
+            Creating an account, you agree to our
+            <a href="#">Terms and Privat Policy</a>
+          </p>
+          <div class="buttons">
+            <button type="button" class="loginBtn" onclick="login()">
+              Log in
+            </button>
+            <button type="button" class="registerBtn" onclick="register()">
+              Register
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="expenses-container">
+      <h2>Your Expenses</h2>
+      <ul id="expenses"></ul>
+    </div>
+    <div class="add-expense">
+      <h2>Add New Expense</h2>
+      <form action="#" id="form">
+        <label for="name">Name</label>
+        <input
+          list="customSelect"
+          type="text"
+          id="customInput"
+          name="name"
+          placeholder="Enter the name of the expense"
+          required
+          autocomplete="off"
+        />
+        <datalist id="customSelect">
+          <option value="Опция 1"></option>
+          <option value="Опция 2"></option>
+          <option value="Опция 3"></option>
+        </datalist>
+
+        <label for="amount">Amount</label>
+        <input
+          type="number"
+          id="amount"
+          name="amount"
+          placeholder="Enter the amount of the expense"
+          required
+          autocomplete="off"
+        />
+        <button type="button" class="addBtn" onclick="addExpense()">Add</button>
+      </form>
+    </div>
+    <div class="total">
+      <h2>Total Expenses</h2>
+      <h3 id="total">0</h3>
+    </div>
+    <div class="clear">
+      <button type="button" class="clearBtn" onclick="clearAll()">Clear All</button>
+  </body>
+</html>
