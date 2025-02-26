@@ -95,6 +95,7 @@ const showExpenses = () => {
 const addExpense = () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
+    showAlert("Сначала войдите в аккаунт");
     return;
   }
 
@@ -130,7 +131,6 @@ const customSelect = (newValue) => {
     newOption.value = newValue;
     dataList.appendChild(newOption);
 
-    // Сохранение нового значения в localStorage
     let customOptions = JSON.parse(localStorage.getItem("customOptions")) || [];
     customOptions.push(newValue);
     localStorage.setItem("customOptions", JSON.stringify(customOptions));
@@ -178,4 +178,10 @@ const clearAll = () => {
 const clearForm = () => {
   document.getElementById("customInput").value = "";
   document.getElementById("amount").value = "";
+};
+
+// Выход
+const logout = () => {
+  localStorage.removeItem("currentUser");
+  location.reload();
 };
