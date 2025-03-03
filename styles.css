@@ -160,3 +160,230 @@ hr {
   color: #d41919;
   cursor: pointer;
 }
+
+/* Month navigation styles */
+.month-navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.month-navigation button {
+  background-color: #0061ff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.9;
+}
+
+.month-navigation button:hover {
+  opacity: 1;
+}
+
+.month-navigation .month-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+/* Main container */
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+/* Expenses container */
+.expenses-container {
+  flex: 1;
+  margin-right: 1rem;
+  padding: 1rem;
+  background-color: #1e2430;
+  border-radius: 10px;
+}
+
+.expenses-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.expenses-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.expenses-container li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #323546;
+}
+
+/* Add expense form */
+.add-expense {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 5rem;
+  background-color: #1e2430;
+  border-radius: 10px;
+  z-index: 1000;
+  border: 2px solid #0061ff;
+}
+
+.add-expense h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.add-expense form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-expense label {
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.add-expense input,
+.add-expense button {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.add-expense input:focus {
+  border-color: #0061ff;
+  outline: none;
+}
+
+.add-expense button {
+  background-color: #0061ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.9;
+}
+
+.add-expense button:hover {
+  opacity: 1;
+}
+
+/* Close button for add expense form */
+.add-expense .close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #f1f1f1;
+}
+
+.add-expense .close:hover,
+.add-expense .close:focus {
+  color: #d41919;
+  cursor: pointer;
+}
+
+/* Add expense button */
+.add-expense-btn {
+  background-color: #0061ff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.9;
+  margin: 1rem 0;
+}
+
+.add-expense-btn:hover {
+  opacity: 1;
+}
+
+/* Total expenses */
+.total {
+  position: absolute;
+  top: 70px; /* Adjusted to avoid overlapping the header */
+  margin-left: 2rem;
+  padding: 1rem;
+  background-color: #1e2430;
+  border-radius: 10px;
+  text-align: left;
+}
+
+.total h2 {
+  display: inline;
+  font-size: 1.8rem;
+  margin-right: 0.5rem;
+  color: white;
+}
+
+.total h3 {
+  display: inline;
+  font-size: 1.5rem;
+  color: #00ff00;
+}
+
+/* Clear all button */
+.clear {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.clear button {
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.9;
+}
+
+.clear button:hover {
+  opacity: 1;
+}
+
+/* Right side container for future content */
+.right-container {
+  flex: 1;
+  margin-left: 1rem;
+  padding: 1rem;
+  background-color: #1e2430;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+/* Logout button */
+.logout {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.logout button {
+  background-color: #0061ff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  opacity: 0.9;
+}
+
+.logout button:hover {
+  opacity: 1;
+}
