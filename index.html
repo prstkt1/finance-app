@@ -26,6 +26,9 @@
       <div class="login-button" id="login-button">
         <button class="btn" onclick="toggleForm()">Log In</button>
       </div>
+      <div class="logout-button" id="logout-button" style="display: none">
+        <button class="btn" onclick="logout()">Log Out</button>
+      </div>
     </header>
     <div class="log-in" id="log-in">
       <form action="#" class="login-content">
@@ -70,11 +73,35 @@
         </div>
       </form>
     </div>
-    <div class="expenses-container">
-      <h2>Your Expenses</h2>
-      <ul id="expenses"></ul>
+    <div class="total">
+      <h2>Total Expenses:</h2>
+      <h3 id="total">0</h3>
+    </div>
+    <div class="month-navigation">
+      <button id="prev-month">&lt;</button>
+      <span id="month-name" class="month-name"></span>
+      <button id="next-month">&gt;</button>
+    </div>
+    <div class="main-container">
+      <div class="expenses-container">
+        <h2>Your Expenses</h2>
+        <ul id="expenses"></ul>
+        <button id="toggle-add-expense" class="add-expense-btn">
+          Add New Expense
+        </button>
+        <div class="clear">
+          <button type="button" class="clearBtn" onclick="clearAll()">
+            Clear All
+          </button>
+        </div>
+      </div>
+      <div class="right-container">
+        <h2>Future Content</h2>
+        <p>Here will be a pie chart.</p>
+      </div>
     </div>
     <div class="add-expense">
+      <span class="close" onclick="toggleAddExpenseForm()">&times;</span>
       <h2>Add New Expense</h2>
       <form action="#" id="form">
         <label for="name">Name</label>
@@ -104,20 +131,6 @@
         />
         <button type="button" class="addBtn" onclick="addExpense()">Add</button>
       </form>
-    </div>
-    <div class="total">
-      <h2>Total Expenses</h2>
-      <h3 id="total">0</h3>
-    </div>
-    <div class="clear">
-      <button type="button" class="clearBtn" onclick="clearAll()">
-        Clear All
-      </button>
-    </div>
-    <div class="logout">
-      <button type="button" class="logoutBtn" onclick="logout()">
-        Log Out
-      </button>
     </div>
   </body>
 </html>
