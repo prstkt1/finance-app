@@ -3,10 +3,14 @@
 const toggleForm = () => {
   let loginForm = document.getElementById("log-in");
   let loginButton = document.getElementById("login-button");
+  let logoutButton = document.getElementById("logout-button");
+
   loginForm.style.display =
     loginForm.style.display === "block" ? "none" : "block";
   loginButton.style.display =
     loginButton.style.display === "none" ? "block" : "none";
+  logoutButton.style.display =
+    logoutButton.style.display === "none" ? "block" : "none";
 };
 
 // Login-Registration
@@ -65,30 +69,20 @@ const login = () => {
 document.addEventListener("DOMContentLoaded", () => {
   const currentUser = localStorage.getItem("currentUser");
   if (currentUser) {
+    document.getElementById("login-button").style.display = "none";
+    document.getElementById("logout-button").style.display = "block";
     showExpenses();
+  } else {
+    document.getElementById("login-button").style.display = "block";
+    document.getElementById("logout-button").style.display = "none";
   }
   loadCustomSelectOptions();
+  updateMonthDisplay();
 });
 
 // Вывод списка расходов
 const showExpenses = () => {
-  const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    return;
-  }
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses;
-
-  let expensesList = document.getElementById("expenses");
-  expensesList.innerHTML = "";
-
-  for (let i = 0; i < expenses.length; i++) {
-    let expense = expenses[i];
-    let item = document.createElement("li");
-    item.textContent = `${expense.name} - ${expense.amount} usd.`;
-    expensesList.appendChild(item);
-  }
+  updateMonthDisplay();
 };
 
 // Добавление расхода
@@ -104,15 +98,17 @@ const addExpense = () => {
 
   const name = document.getElementById("customInput").value;
   const amount = Math.abs(document.getElementById("amount").value);
+  const date = new Date().toISOString().split("T")[0];
 
   let existingExpense = expenses.find((expense) => expense.name === name);
   if (existingExpense) {
     existingExpense.amount = amount + parseInt(existingExpense.amount);
+    existingExpense.date = date;
   } else {
-    expenses.push({ name: name, amount: amount });
+    expenses.push({ name: name, amount: amount, date: date });
   }
   localStorage.setItem("users", JSON.stringify(users));
-  showExpenses();
+  filterExpensesByMonth(currentMonth, currentYear);
   totalExpense();
 
   customSelect(name);
@@ -161,11 +157,24 @@ const totalExpense = () => {
 
   let total = 0;
   for (let i = 0; i < expenses.length; i++) {
-    total += parseInt(expenses[i].amount);
+    const expenseDate = new Date(expenses[i].date);
+    if (
+      expenseDate.getMonth() === currentMonth &&
+      expenseDate.getFullYear() === currentYear
+    ) {
+      total += parseInt(expenses[i].amount);
+    }
   }
 
   let totalElement = document.getElementById("total");
   totalElement.textContent = `Total: ${total} usd.`;
+};
+
+// Toggle add expense form
+const toggleAddExpenseForm = () => {
+  const addExpenseForm = document.querySelector(".add-expense");
+  addExpenseForm.style.display =
+    addExpenseForm.style.display === "block" ? "none" : "block";
 };
 
 // Clear all
@@ -185,3 +194,95 @@ const logout = () => {
   localStorage.removeItem("currentUser");
   location.reload();
 };
+
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+// Update month display
+const updateMonthDisplay = () => {
+  document.getElementById(
+    "month-name"
+  ).textContent = `${monthNames[currentMonth]} ${currentYear}`;
+  filterExpensesByMonth(currentMonth, currentYear);
+  totalExpense();
+};
+
+// Navigate to previous month
+const prevMonth = () => {
+  if (currentMonth === 0) {
+    currentMonth = 11;
+    currentYear--;
+  } else {
+    currentMonth--;
+  }
+  updateMonthDisplay();
+};
+
+// Navigate to next month
+const nextMonth = () => {
+  if (currentMonth === 11) {
+    currentMonth = 0;
+    currentYear++;
+  } else {
+    currentMonth++;
+  }
+  updateMonthDisplay();
+};
+
+// Filter expenses by month
+const filterExpensesByMonth = (month, year) => {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+  let expenses = users[currentUser].expenses;
+
+  let filteredExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date);
+    return (
+      expenseDate.getMonth() === month && expenseDate.getFullYear() === year
+    );
+  });
+
+  displayExpenses(filteredExpenses);
+};
+
+// Display expenses
+const displayExpenses = (expenses) => {
+  let expensesList = document.getElementById("expenses");
+  expensesList.innerHTML = "";
+
+  for (let i = 0; i < expenses.length; i++) {
+    let expense = expenses[i];
+    let item = document.createElement("li");
+    item.textContent = `${expense.name} - ${expense.amount} usd.`;
+    expensesList.appendChild(item);
+  }
+};
+
+// Add event listeners for month navigation
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("prev-month").addEventListener("click", prevMonth);
+  document.getElementById("next-month").addEventListener("click", nextMonth);
+  document
+    .getElementById("toggle-add-expense")
+    .addEventListener("click", toggleAddExpenseForm);
+  updateMonthDisplay();
+});
