@@ -98,12 +98,15 @@ const addExpense = () => {
 
   const name = document.getElementById("customInput").value;
   const amount = Math.abs(document.getElementById("amount").value);
-  const date = new Date().toISOString().split("T")[0];
+  const date = new Date(currentYear, currentMonth, new Date().getDate())
+    .toISOString()
+    .split("T")[0];
 
-  let existingExpense = expenses.find((expense) => expense.name === name);
+  let existingExpense = expenses.find(
+    (expense) => expense.name === name && expense.date === date
+  );
   if (existingExpense) {
     existingExpense.amount = amount + parseInt(existingExpense.amount);
-    existingExpense.date = date;
   } else {
     expenses.push({ name: name, amount: amount, date: date });
   }
@@ -113,6 +116,7 @@ const addExpense = () => {
 
   customSelect(name);
   clearForm();
+  closeAddExpenseForm();
 };
 
 // Кастомный select
