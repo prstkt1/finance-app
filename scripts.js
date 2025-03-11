@@ -13,7 +13,7 @@ const toggleForm = () => {
     logoutButton.style.display === "none" ? "block" : "none";
 };
 
-// Login-Registration
+// Registration
 const register = () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("pass").value;
@@ -21,21 +21,21 @@ const register = () => {
   let users = JSON.parse(localStorage.getItem("users")) || {};
 
   if (users[email]) {
-    showAlert("Такой пользователь уже существует!");
+    showAlert("User already exists!");
   } else {
     users[email] = {
       password: password,
       expenses: [],
     };
     localStorage.setItem("users", JSON.stringify(users));
-    showAlert("Регистрация успешна!");
+    showAlert("Registration successful!");
     localStorage.setItem("currentUser", email);
     toggleForm();
     showExpenses();
   }
 };
 
-// Красивый алерт
+// Show alert
 const showAlert = (message) => {
   const alert = document.getElementById("better_alert");
   alert.textContent = message;
@@ -48,7 +48,7 @@ const showAlert = (message) => {
   }, 3000);
 };
 
-// Авторизация
+// Login
 const login = () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("pass").value;
@@ -56,12 +56,12 @@ const login = () => {
   let users = JSON.parse(localStorage.getItem("users")) || {};
 
   if (users[email] && users[email].password === password) {
-    showAlert("Вход выполнен!");
+    showAlert("Login successful!");
     localStorage.setItem("currentUser", email);
     toggleForm();
     showExpenses();
   } else {
-    showAlert("Неверный логин или пароль!");
+    showAlert("Invalid email or password!");
   }
 };
 
@@ -85,11 +85,11 @@ const showExpenses = () => {
   updateMonthDisplay();
 };
 
-// Добавление расхода
+// Add expense
 const addExpense = () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
-    showAlert("Сначала войдите в аккаунт");
+    showAlert("Please log in first");
     return;
   }
 
@@ -149,7 +149,7 @@ const loadCustomSelectOptions = () => {
   });
 };
 
-// Подсчет общей суммы
+// Total expense calculation
 const totalExpense = () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -171,7 +171,7 @@ const totalExpense = () => {
   }
 
   let totalElement = document.getElementById("total");
-  totalElement.textContent = `Total: ${total} usd.`;
+  totalElement.textContent = `Total: ${total} USD`;
 };
 
 // Toggle add expense form
