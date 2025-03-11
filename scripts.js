@@ -65,7 +65,7 @@ const login = () => {
   }
 };
 
-// Проверка авторизации
+// Authorization check
 document.addEventListener("DOMContentLoaded", () => {
   const currentUser = localStorage.getItem("currentUser");
   if (currentUser) {
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateMonthDisplay();
 });
 
-// Вывод списка расходов
+// Show expenses list
 const showExpenses = () => {
   updateMonthDisplay();
 };
@@ -119,7 +119,7 @@ const addExpense = () => {
   closeAddExpenseForm();
 };
 
-// Кастомный select
+// Custom select
 const customSelect = (newValue) => {
   const dataList = document.getElementById("customSelect");
 
@@ -137,7 +137,7 @@ const customSelect = (newValue) => {
   }
 };
 
-// Загрузка кастомных опций
+// Load custom options
 const loadCustomSelectOptions = () => {
   const dataList = document.getElementById("customSelect");
   let customOptions = JSON.parse(localStorage.getItem("customOptions")) || [];
@@ -187,13 +187,13 @@ const clearAll = () => {
   location.reload();
 };
 
-// Очистка ввода
+// Clear input form
 const clearForm = () => {
   document.getElementById("customInput").value = "";
   document.getElementById("amount").value = "";
 };
 
-// Выход
+// Logout
 const logout = () => {
   localStorage.removeItem("currentUser");
   location.reload();
@@ -289,4 +289,22 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("toggle-add-expense")
     .addEventListener("click", toggleAddExpenseForm);
   updateMonthDisplay();
+});
+
+// Expense chart
+const ctx = document.getElementById("expenseChart").getContext("2d");
+let pieData = [100, 200];
+let pieLabels = ["FHF", "dad"];
+const chart = new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: [...pieLabels],
+    datasets: [
+      {
+        label: "Расходы",
+        data: [...pieData],
+        backgroundColor: ["red"],
+      },
+    ],
+  },
 });
