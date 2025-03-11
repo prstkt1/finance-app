@@ -98,22 +98,6 @@
       <div class="right-container">
         <canvas id="expenseChart"></canvas>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-          const ctx = document.getElementById("expenseChart").getContext("2d");
-          const chart = new Chart(ctx, {
-            type: "pie", // Тип графика: bar (столбчатый), line (линейный), pie (круговой)
-            data: {
-              labels: ["Еда", "Транспорт", "Развлечения", "Прочее", "Паафае1"],
-              datasets: [
-                {
-                  label: "Расходы",
-                  data: [150, 50, 80, 50], // Суммы по категориям
-                  backgroundColor: ["red", "blue", "green"],
-                },
-              ],
-            },
-          });
-        </script>
       </div>
     </div>
     <div class="add-expense">
