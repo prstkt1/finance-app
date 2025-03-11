@@ -117,6 +117,12 @@ const addExpense = () => {
   customSelect(name);
   clearForm();
   closeAddExpenseForm();
+  updateChart();
+};
+
+const updateChart = () => {
+  chart.data.datasets[0].data = getUserAmounts();
+  chart.update();
 };
 
 // Custom select
@@ -291,9 +297,22 @@ document.addEventListener("DOMContentLoaded", () => {
   updateMonthDisplay();
 });
 
+// Extract amounts from user's expenses
+const getUserAmounts = () => {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    return [];
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+  let expenses = users[currentUser].expenses || [];
+
+  return expenses.map((expense) => expense.amount);
+};
+
 // Expense chart
 const ctx = document.getElementById("expenseChart").getContext("2d");
-let pieData = [100, 200];
+let pieData = getUserAmounts();
 let pieLabels = ["FHF", "dad"];
 const chart = new Chart(ctx, {
   type: "pie",
