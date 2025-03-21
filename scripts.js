@@ -122,8 +122,11 @@ const addExpense = () => {
 
 // update chart
 const updateChart = () => {
+  chart.data.labels = [];
+  chart.data.datasets[0].data = [];
+
+  chart.data.labels = getUserNames();
   chart.data.datasets[0].data = getUserAmounts();
-  chart.data.datasets[0].labels = getUserNames();
   chart.update();
 };
 
@@ -342,3 +345,8 @@ const chart = new Chart(ctx, {
     ],
   },
 });
+
+const closeAddExpenseForm = () => {
+  const addExpenseForm = document.querySelector(".add-expense");
+  addExpenseForm.style.display = "none";
+};
