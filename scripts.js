@@ -122,11 +122,31 @@ const addExpense = () => {
 
 // update chart
 const updateChart = () => {
-  chart.data.labels = [];
-  chart.data.datasets[0].data = [];
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    chart.data.labels = [];
+    chart.data.datasets[0].data = [];
+    chart.update();
+    return;
+  }
 
-  chart.data.labels = getUserNames();
-  chart.data.datasets[0].data = getUserAmounts();
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+  let expenses = users[currentUser].expenses || [];
+
+  // Filter expenses by the current month and year
+  let filteredExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date);
+    return (
+      expenseDate.getMonth() === currentMonth &&
+      expenseDate.getFullYear() === currentYear
+    );
+  });
+
+  // Update chart data
+  chart.data.labels = filteredExpenses.map((expense) => expense.name);
+  chart.data.datasets[0].data = filteredExpenses.map(
+    (expense) => expense.amount
+  );
   chart.update();
 };
 
@@ -246,6 +266,7 @@ const prevMonth = () => {
     currentMonth--;
   }
   updateMonthDisplay();
+  updateChart();
 };
 
 // Navigate to next month
@@ -257,6 +278,7 @@ const nextMonth = () => {
     currentMonth++;
   }
   updateMonthDisplay();
+  updateChart();
 };
 
 // Filter expenses by month
