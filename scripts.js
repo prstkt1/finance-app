@@ -1,23 +1,7 @@
 "use strict";
 
+import { logout } from "./auth.js";
 import { showAlert, toggleForm } from "./ui.js";
-
-// Login
-const login = () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("pass").value;
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-
-  if (users[email] && users[email].password === password) {
-    showAlert("Login successful!");
-    localStorage.setItem("currentUser", email);
-    toggleForm();
-    showExpenses();
-  } else {
-    showAlert("Invalid email or password!");
-  }
-};
 
 // Authorization check
 document.addEventListener("DOMContentLoaded", () => {
@@ -170,26 +154,10 @@ const toggleAddExpenseForm = () => {
     addExpenseForm.style.display === "block" ? "none" : "block";
 };
 
-// Clear all
-// const clearAll = () => {
-//   document.addEventListener("DOMContentLoaded", () => {
-//     document.getElementById("clearAllBtn").addEventListener("click", () => {
-//       localStorage.clear();
-//       location.reload();
-//     });
-//   });
-// };
-
 // Clear input form
 const clearForm = () => {
   document.getElementById("customInput").value = "";
   document.getElementById("amount").value = "";
-};
-
-// Logout
-const logout = () => {
-  localStorage.removeItem("currentUser");
-  location.reload();
 };
 
 export let currentMonth = new Date().getMonth();
@@ -283,21 +251,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("toggle-add-expense")
     .addEventListener("click", toggleAddExpenseForm);
-  // document.getElementById("openLoginBtn").addEventListener("click", toggleForm);
-  // document.getElementById("closeLogin").addEventListener("click", toggleForm);
   document
     .getElementById("addExpenseBtn")
     .addEventListener("click", addExpense);
   updateMonthDisplay();
-  //Event listeners for login logut
-  document.getElementById("logoutBtn").addEventListener("click", logout);
-  document.getElementById("loginBtn").addEventListener("click", login);
-  // document.getElementById("registerBtn").addEventListener("click", register);
-  //Clear all button
-  // document.getElementById("clearAllBtn").addEventListener("click", () => {
-  //   localStorage.clear();
-  //   location.reload();
-  // });
+
   document
     .getElementById("closeAddExpense")
     .addEventListener("click", closeAddExpenseForm);
@@ -353,10 +311,6 @@ const closeAddExpenseForm = () => {
 };
 
 export {
-  // toggleForm,
-  // register,
-  // showAlert,
-  login,
   showExpenses,
   addExpense,
   updateChart,
@@ -364,9 +318,7 @@ export {
   loadCustomSelectOptions,
   totalExpense,
   toggleAddExpenseForm,
-  // clearAll,
   clearForm,
-  logout,
   prevMonth,
   nextMonth,
   filterExpensesByMonth,
