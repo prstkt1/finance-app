@@ -11,28 +11,23 @@
     <title>Finance App</title>
     <link rel="icon" type="images/x-icon" href="favicon/diagram_white.ico" />
     <link rel="stylesheet" href="styles.css" />
-    <script src="scripts.js" defer></script>
+    <script type="module" src="./index.js"></script>
   </head>
-  <body onload="totalExpense()">
+  <body>
     <div id="better_alert" class="hidden"></div>
     <header class="header">
       <div class="logo">Finance App</div>
 
-      <!-- кнопочки header
-      <nav class="nav">
-        <a href="#">adada</a>
-        <a href="#">adaddad</a>
-      </nav> -->
       <div class="login-button" id="login-button">
-        <button class="btn" onclick="toggleForm()">Log In</button>
+        <button class="btn" id="openLoginBtn">Log In</button>
       </div>
       <div class="logout-button" id="logout-button" style="display: none">
-        <button class="btn" onclick="logout()">Log Out</button>
+        <button class="btn" id="logoutBtn">Log Out</button>
       </div>
     </header>
     <div class="log-in" id="log-in">
       <form action="#" class="login-content">
-        <span class="close" onclick="toggleForm()">&times;</span>
+        <span class="close" id="closeLogin">&times;</span>
         <div class="container">
           <h1>Log In</h1>
           <hr />
@@ -54,8 +49,8 @@
             required
             autocomplete="off"
           />
-          <label for="remember">
-            <input type="checkbox" name="remember" id="remember" checked />
+          <label>
+            <input type="checkbox" id="remember" checked />
             Remember me
           </label>
           <p>
@@ -63,10 +58,8 @@
             <a href="#">Terms and Privacy Policy</a>
           </p>
           <div class="buttons">
-            <button type="button" class="loginBtn" onclick="login()">
-              Log in
-            </button>
-            <button type="button" class="registerBtn" onclick="register()">
+            <button type="button" class="loginBtn" id="loginBtn">Log in</button>
+            <button type="button" class="registerBtn" id="registerBtn">
               Register
             </button>
           </div>
@@ -90,7 +83,7 @@
           Add New Expense
         </button>
         <div class="clear">
-          <button type="button" class="clearBtn" onclick="clearAll()">
+          <button type="button" class="clearBtn" id="clearAllBtn">
             Clear All
           </button>
         </div>
@@ -100,8 +93,9 @@
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       </div>
     </div>
-    <div class="add-expense">
-      <span class="close" onclick="toggleAddExpenseForm()">&times;</span>
+
+    <div class="add-expense" id="add-expense">
+      <span class="close" id="closeAddExpense">&times;</span>
       <h2>Add New Expense</h2>
       <form action="#" id="form">
         <label for="name">Name</label>
@@ -129,7 +123,7 @@
           required
           autocomplete="off"
         />
-        <button type="button" class="addBtn" onclick="addExpense()">Add</button>
+        <button type="button" class="addBtn" id="addExpenseBtn">Add</button>
       </form>
     </div>
   </body>
