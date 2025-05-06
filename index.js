@@ -6,7 +6,6 @@ import {
   totalExpense,
   toggleAddExpenseForm,
   clearForm,
-  logout,
   prevMonth,
   nextMonth,
   filterExpensesByMonth,
@@ -17,7 +16,6 @@ import {
   closeAddExpenseForm,
   chart,
 } from "./scripts.js";
-import { login } from "./auth.js";
+import { login, register, logout } from "./auth.js";
 import { showAlert, toggleForm } from "./ui.js";
 import { clearAll } from "./helpers.js";
-import { register } from "./auth.js";
