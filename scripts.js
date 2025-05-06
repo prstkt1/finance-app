@@ -78,6 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   loadCustomSelectOptions();
   updateMonthDisplay();
+  document.getElementById("clearAllBtn").addEventListener("click", () => {
+    localStorage.clear();
+    location.reload();
+  });
+  document.getElementById("registerBtn").addEventListener("click", register);
 });
 
 // Show expenses list
@@ -214,8 +219,12 @@ const toggleAddExpenseForm = () => {
 
 // Clear all
 const clearAll = () => {
-  localStorage.clear();
-  location.reload();
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("clearAllBtn").addEventListener("click", () => {
+      localStorage.clear();
+      location.reload();
+    });
+  });
 };
 
 // Clear input form
