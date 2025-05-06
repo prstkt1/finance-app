@@ -78,11 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   loadCustomSelectOptions();
   updateMonthDisplay();
-  document.getElementById("clearAllBtn").addEventListener("click", () => {
-    localStorage.clear();
-    location.reload();
-  });
-  document.getElementById("registerBtn").addEventListener("click", register);
 });
 
 // Show expenses list
@@ -103,6 +98,10 @@ const addExpense = () => {
 
   const name = document.getElementById("customInput").value;
   const amount = Math.abs(document.getElementById("amount").value);
+  if (amount === 0) {
+    showAlert("Amount cannot be zero!");
+    return;
+  }
   const date = new Date(currentYear, currentMonth, new Date().getDate())
     .toISOString()
     .split("T")[0];
@@ -323,7 +322,7 @@ const displayExpenses = (expenses) => {
   }
 };
 
-// Add event listeners for month navigation
+//Event listeners for month navigation
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("prev-month").addEventListener("click", prevMonth);
   document.getElementById("next-month").addEventListener("click", nextMonth);
@@ -335,9 +334,19 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("addExpenseBtn")
     .addEventListener("click", addExpense);
+  updateMonthDisplay();
+  //Event listeners for login logut
   document.getElementById("logoutBtn").addEventListener("click", logout);
   document.getElementById("loginBtn").addEventListener("click", login);
-  updateMonthDisplay();
+  document.getElementById("registerBtn").addEventListener("click", register);
+  //Clear all button
+  document.getElementById("clearAllBtn").addEventListener("click", () => {
+    localStorage.clear();
+    location.reload();
+  });
+  document
+    .getElementById("closeAddExpense")
+    .addEventListener("click", closeAddExpenseForm);
 });
 
 // Extract amounts from user's expenses
