@@ -1,52 +1,6 @@
 "use strict";
-// Log in button
-const toggleForm = () => {
-  let loginForm = document.getElementById("log-in");
-  let loginButton = document.getElementById("login-button");
-  let logoutButton = document.getElementById("logout-button");
 
-  loginForm.style.display =
-    loginForm.style.display === "block" ? "none" : "block";
-  loginButton.style.display =
-    loginButton.style.display === "none" ? "block" : "none";
-  logoutButton.style.display =
-    logoutButton.style.display === "none" ? "block" : "none";
-};
-
-// Registration
-const register = () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("pass").value;
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-
-  if (users[email]) {
-    showAlert("User already exists!");
-  } else {
-    users[email] = {
-      password: password,
-      expenses: [],
-    };
-    localStorage.setItem("users", JSON.stringify(users));
-    showAlert("Registration successful!");
-    localStorage.setItem("currentUser", email);
-    toggleForm();
-    showExpenses();
-  }
-};
-
-// Show alert
-const showAlert = (message) => {
-  const alert = document.getElementById("better_alert");
-  alert.textContent = message;
-  alert.classList.remove("hidden");
-  alert.classList.add("show");
-
-  setTimeout(() => {
-    alert.classList.remove("show");
-    alert.classList.add("hidden");
-  }, 3000);
-};
+import { showAlert, toggleForm } from "./ui.js";
 
 // Login
 const login = () => {
@@ -217,14 +171,14 @@ const toggleAddExpenseForm = () => {
 };
 
 // Clear all
-const clearAll = () => {
-  document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("clearAllBtn").addEventListener("click", () => {
-      localStorage.clear();
-      location.reload();
-    });
-  });
-};
+// const clearAll = () => {
+//   document.addEventListener("DOMContentLoaded", () => {
+//     document.getElementById("clearAllBtn").addEventListener("click", () => {
+//       localStorage.clear();
+//       location.reload();
+//     });
+//   });
+// };
 
 // Clear input form
 const clearForm = () => {
@@ -329,8 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("toggle-add-expense")
     .addEventListener("click", toggleAddExpenseForm);
-  document.getElementById("openLoginBtn").addEventListener("click", toggleForm);
-  document.getElementById("closeLogin").addEventListener("click", toggleForm);
+  // document.getElementById("openLoginBtn").addEventListener("click", toggleForm);
+  // document.getElementById("closeLogin").addEventListener("click", toggleForm);
   document
     .getElementById("addExpenseBtn")
     .addEventListener("click", addExpense);
@@ -338,12 +292,12 @@ document.addEventListener("DOMContentLoaded", () => {
   //Event listeners for login logut
   document.getElementById("logoutBtn").addEventListener("click", logout);
   document.getElementById("loginBtn").addEventListener("click", login);
-  document.getElementById("registerBtn").addEventListener("click", register);
+  // document.getElementById("registerBtn").addEventListener("click", register);
   //Clear all button
-  document.getElementById("clearAllBtn").addEventListener("click", () => {
-    localStorage.clear();
-    location.reload();
-  });
+  // document.getElementById("clearAllBtn").addEventListener("click", () => {
+  //   localStorage.clear();
+  //   location.reload();
+  // });
   document
     .getElementById("closeAddExpense")
     .addEventListener("click", closeAddExpenseForm);
@@ -399,9 +353,9 @@ const closeAddExpenseForm = () => {
 };
 
 export {
-  toggleForm,
-  register,
-  showAlert,
+  // toggleForm,
+  // register,
+  // showAlert,
   login,
   showExpenses,
   addExpense,
@@ -410,7 +364,7 @@ export {
   loadCustomSelectOptions,
   totalExpense,
   toggleAddExpenseForm,
-  clearAll,
+  // clearAll,
   clearForm,
   logout,
   prevMonth,
