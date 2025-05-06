@@ -3,8 +3,10 @@ import { showAlert, toggleForm } from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("registerBtn").addEventListener("click", register);
+  document.getElementById("loginBtn").addEventListener("click", login);
+  document.getElementById("logout-button").addEventListener("click", logout);
 });
-const register = () => {
+export const register = () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("pass").value;
 
@@ -25,7 +27,6 @@ const register = () => {
   }
 };
 
-export { register }; // Login
 export const login = () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("pass").value;
@@ -40,4 +41,9 @@ export const login = () => {
   } else {
     showAlert("Invalid email or password!");
   }
+};
+
+export const logout = () => {
+  localStorage.removeItem("currentUser");
+  location.reload();
 };
