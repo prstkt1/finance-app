@@ -1,7 +1,4 @@
 import {
-  toggleForm,
-  register,
-  showAlert,
   login,
   showExpenses,
   addExpense,
@@ -9,7 +6,6 @@ import {
   loadCustomSelectOptions,
   totalExpense,
   toggleAddExpenseForm,
-  clearAll,
   clearForm,
   logout,
   prevMonth,
@@ -22,3 +18,6 @@ import {
   closeAddExpenseForm,
   chart,
 } from "./scripts.js";
+import { showAlert, toggleForm } from "./ui.js";
+import { clearAll } from "./helpers.js";
+import { register } from "./auth.js";
