@@ -1,5 +1,4 @@
 import {
-  login,
   showExpenses,
   addExpense,
   customSelect,
@@ -18,6 +17,7 @@ import {
   closeAddExpenseForm,
   chart,
 } from "./scripts.js";
+import { login } from "./auth.js";
 import { showAlert, toggleForm } from "./ui.js";
 import { clearAll } from "./helpers.js";
 import { register } from "./auth.js";
