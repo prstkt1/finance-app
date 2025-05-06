@@ -230,8 +230,8 @@ const logout = () => {
   location.reload();
 };
 
-let currentMonth = new Date().getMonth();
-let currentYear = new Date().getFullYear();
+export let currentMonth = new Date().getMonth();
+export let currentYear = new Date().getFullYear();
 
 const monthNames = [
   "January",
@@ -321,6 +321,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("toggle-add-expense")
     .addEventListener("click", toggleAddExpenseForm);
+  document.getElementById("openLoginBtn").addEventListener("click", toggleForm);
+  document.getElementById("closeLogin").addEventListener("click", toggleForm);
+  document
+    .getElementById("addExpenseBtn")
+    .addEventListener("click", addExpense);
+  document.getElementById("logoutBtn").addEventListener("click", logout);
+  document.getElementById("loginBtn").addEventListener("click", login);
   updateMonthDisplay();
 });
 
@@ -354,7 +361,7 @@ const getUserNames = () => {
 const ctx = document.getElementById("expenseChart").getContext("2d");
 let pieData = getUserAmounts();
 let pieLabels = getUserNames();
-const chart = new Chart(ctx, {
+export const chart = new Chart(ctx, {
   type: "pie",
   data: {
     labels: [...pieLabels],
@@ -371,4 +378,29 @@ const chart = new Chart(ctx, {
 const closeAddExpenseForm = () => {
   const addExpenseForm = document.querySelector(".add-expense");
   addExpenseForm.style.display = "none";
+};
+
+export {
+  toggleForm,
+  register,
+  showAlert,
+  login,
+  showExpenses,
+  addExpense,
+  updateChart,
+  customSelect,
+  loadCustomSelectOptions,
+  totalExpense,
+  toggleAddExpenseForm,
+  clearAll,
+  clearForm,
+  logout,
+  prevMonth,
+  nextMonth,
+  filterExpensesByMonth,
+  displayExpenses,
+  getUserAmounts,
+  getUserNames,
+  updateMonthDisplay,
+  closeAddExpenseForm,
 };
