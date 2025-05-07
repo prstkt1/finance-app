@@ -1,12 +1,12 @@
 import {
-  prevMonth,
-  nextMonth,
   filterExpensesByMonth,
   displayExpenses,
   getUserAmounts,
   getUserNames,
   chart,
 } from "./scripts.js";
+import { nextMonth } from "./expenses.js";
+import { prevMonth } from "./expenses.js";
 import { showExpenses, addExpense } from "./expenses.js";
 import { login, register, logout } from "./auth.js";
 import {
