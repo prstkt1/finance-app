@@ -1,6 +1,5 @@
 "use strict";
 
-import { logout } from "./auth.js";
 import {
   currentMonth,
   currentYear,
@@ -12,8 +11,8 @@ import {
 import {
   loadCustomSelectOptions,
   toggleAddExpenseForm,
-  toggleForm,
   updateMonthDisplay,
+  closeAddExpenseForm,
 } from "./ui.js";
 
 // Authorization check
@@ -106,9 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", addExpense);
   updateMonthDisplay();
 
-  // document
-  //   .getElementById("closeAddExpense")
-  //   .addEventListener("click", closeAddExpenseForm);
+  document
+    .getElementById("closeAddExpense")
+    .addEventListener("click", closeAddExpenseForm);
 });
 
 // Extract amounts from user's expenses
@@ -162,10 +161,10 @@ export {
   // customSelect,
   // loadCustomSelectOptions,
   // totalExpense,
-  toggleAddExpenseForm,
+  // toggleAddExpenseForm,
   // clearForm,
-  prevMonth,
-  nextMonth,
+  // prevMonth,
+  // nextMonth,
   filterExpensesByMonth,
   displayExpenses,
   getUserAmounts,
