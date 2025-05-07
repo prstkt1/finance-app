@@ -52,3 +52,25 @@ export const addExpense = () => {
   closeAddExpenseForm();
   updateChart();
 };
+// Navigate to previous month
+export const prevMonth = () => {
+  if (currentMonth === 0) {
+    currentMonth = 11;
+    currentYear--;
+  } else {
+    currentMonth--;
+  }
+  updateMonthDisplay();
+  updateChart();
+};
+// Navigate to next month
+export const nextMonth = () => {
+  if (currentMonth === 11) {
+    currentMonth = 0;
+    currentYear++;
+  } else {
+    currentMonth++;
+  }
+  updateMonthDisplay();
+  updateChart();
+};
