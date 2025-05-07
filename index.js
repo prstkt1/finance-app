@@ -1,21 +1,23 @@
 import {
-  showExpenses,
-  addExpense,
-  customSelect,
-  loadCustomSelectOptions,
-  totalExpense,
-  toggleAddExpenseForm,
-  clearForm,
   prevMonth,
   nextMonth,
   filterExpensesByMonth,
   displayExpenses,
   getUserAmounts,
   getUserNames,
-  updateMonthDisplay,
-  closeAddExpenseForm,
   chart,
 } from "./scripts.js";
+import { showExpenses, addExpense } from "./expenses.js";
 import { login, register, logout } from "./auth.js";
-import { showAlert, toggleForm } from "./ui.js";
+import {
+  showAlert,
+  toggleForm,
+  clearForm,
+  customSelect,
+  loadCustomSelectOptions,
+  updateMonthDisplay,
+  closeAddExpenseForm,
+  toggleAddExpenseForm,
+  totalExpense,
+} from "./ui.js";
 import { clearAll } from "./helpers.js";
