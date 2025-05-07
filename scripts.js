@@ -1,6 +1,5 @@
 "use strict";
 
-import { getUserAmounts, getUserNames } from "./chart.js";
 import { showExpenses, addExpense, prevMonth, nextMonth } from "./expenses.js";
 import {
   loadCustomSelectOptions,
@@ -74,24 +73,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", closeAddExpenseForm);
 });
 
-// Expense chart
-const ctx = document.getElementById("expenseChart").getContext("2d");
-let pieData = getUserAmounts();
-let pieLabels = getUserNames();
-export const chart = new Chart(ctx, {
-  type: "pie",
-  data: {
-    labels: [...pieLabels],
-    datasets: [
-      {
-        label: "Расходы",
-        data: [...pieData],
-        backgroundColor: ["red"],
-      },
-    ],
-  },
-});
-
 export {
   // showExpenses,
   // addExpense,
@@ -105,8 +86,8 @@ export {
   // nextMonth,
   filterExpensesByMonth,
   displayExpenses,
-  getUserAmounts,
-  getUserNames,
+  // getUserAmounts,
+  // getUserNames,
   // updateMonthDisplay,
   // closeAddExpenseForm,
 };
