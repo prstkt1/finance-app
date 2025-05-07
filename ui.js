@@ -3,12 +3,6 @@ import { filterExpensesByMonth } from "./scripts.js";
 import { currentYear } from "./expenses.js";
 import { currentMonth } from "./expenses.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("openLoginBtn").addEventListener("click", toggleForm);
-  document.getElementById("closeLogin").addEventListener("click", showAlert);
-  document.getElementById("clearAllBtn").addEventListener("click", clearAll);
-});
-
 export const toggleForm = () => {
   let loginForm = document.getElementById("log-in");
   let loginButton = document.getElementById("login-button");
