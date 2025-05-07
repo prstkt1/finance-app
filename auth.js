@@ -1,11 +1,6 @@
 import { showExpenses } from "./expenses.js";
 import { showAlert, toggleForm } from "./ui.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("registerBtn").addEventListener("click", register);
-  document.getElementById("loginBtn").addEventListener("click", login);
-  document.getElementById("logout-button").addEventListener("click", logout);
-});
 export const register = () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("pass").value;
