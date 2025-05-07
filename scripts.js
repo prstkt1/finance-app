@@ -1,13 +1,7 @@
 "use strict";
 
-import {
-  currentMonth,
-  currentYear,
-  showExpenses,
-  addExpense,
-  prevMonth,
-  nextMonth,
-} from "./expenses.js";
+import { getUserAmounts, getUserNames } from "./chart.js";
+import { showExpenses, addExpense, prevMonth, nextMonth } from "./expenses.js";
 import {
   loadCustomSelectOptions,
   toggleAddExpenseForm,
@@ -29,36 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCustomSelectOptions();
   updateMonthDisplay();
 });
-
-// update chart
-const updateChart = () => {
-  const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    chart.data.labels = [];
-    chart.data.datasets[0].data = [];
-    chart.update();
-    return;
-  }
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses || [];
-
-  // Filter expenses by the current month and year
-  let filteredExpenses = expenses.filter((expense) => {
-    const expenseDate = new Date(expense.date);
-    return (
-      expenseDate.getMonth() === currentMonth &&
-      expenseDate.getFullYear() === currentYear
-    );
-  });
-
-  // Update chart data
-  chart.data.labels = filteredExpenses.map((expense) => expense.name);
-  chart.data.datasets[0].data = filteredExpenses.map(
-    (expense) => expense.amount
-  );
-  chart.update();
-};
 
 // Filter expenses by month
 const filterExpensesByMonth = (month, year) => {
@@ -110,32 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", closeAddExpenseForm);
 });
 
-// Extract amounts from user's expenses
-const getUserAmounts = () => {
-  const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    return [];
-  }
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses || [];
-
-  return expenses.map((expense) => expense.amount);
-};
-
-// Extract names from user's expenses
-const getUserNames = () => {
-  const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    return [];
-  }
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses || [];
-
-  return expenses.map((expense) => expense.name);
-};
-
 // Expense chart
 const ctx = document.getElementById("expenseChart").getContext("2d");
 let pieData = getUserAmounts();
@@ -157,7 +95,7 @@ export const chart = new Chart(ctx, {
 export {
   // showExpenses,
   // addExpense,
-  updateChart,
+  // updateChart,
   // customSelect,
   // loadCustomSelectOptions,
   // totalExpense,
