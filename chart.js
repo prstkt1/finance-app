@@ -1,5 +1,4 @@
 import { currentMonth, currentYear } from "./expenses.js";
-import { chart } from "./scripts.js";
 
 // update chart
 export const updateChart = () => {
@@ -53,3 +52,20 @@ export const getUserNames = () => {
 
   return expenses.map((expense) => expense.name);
 };
+// Expense chart
+export const ctx = document.getElementById("expenseChart").getContext("2d");
+export let pieData = getUserAmounts();
+export let pieLabels = getUserNames();
+export const chart = new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: [...pieLabels],
+    datasets: [
+      {
+        label: "Расходы",
+        data: [...pieData],
+        backgroundColor: ["red"],
+      },
+    ],
+  },
+});
