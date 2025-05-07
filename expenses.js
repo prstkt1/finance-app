@@ -84,6 +84,31 @@ export const displayExpenses = (expenses) => {
     let expense = expenses[i];
     let item = document.createElement("li");
     item.textContent = `${expense.name} - ${expense.amount} usd.`;
+
+    //delete button
+    let deleteButton = document.createElement("button");
+    deleteButton.textContent = "✖";
+    deleteButton.classList.add("delete-expense-btn");
+
+    //delete functionality
+    deleteButton.addEventListener("click", () => {
+      const currentUser = localStorage.getItem("currentUser");
+      if (!currentUser) return;
+
+      let users = JSON.parse(localStorage.getItem("users")) || {};
+      let userExpenses = users[currentUser].expenses;
+
+      users[currentUser].expenses = userExpenses.filter(
+        (e) => !(e.name === expense.name && e.date === expense.date)
+      );
+
+      localStorage.setItem("users", JSON.stringify(users));
+      filterExpensesByMonth(currentMonth, currentYear);
+      totalExpense();
+      updateChart();
+    });
+
+    item.appendChild(deleteButton);
     expensesList.appendChild(item);
   }
 };
