@@ -1,4 +1,4 @@
-import { showExpenses } from "./scripts.js";
+import { showExpenses } from "./expenses.js";
 import { showAlert, toggleForm } from "./ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
