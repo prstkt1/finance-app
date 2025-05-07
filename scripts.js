@@ -12,7 +12,11 @@ import {
   toggleAddExpenseForm,
   updateMonthDisplay,
   closeAddExpenseForm,
+  toggleForm,
+  showAlert,
 } from "./ui.js";
+import { register, login, logout } from "./auth.js";
+import { clearAll } from "./helpers.js";
 
 // Authorization check
 document.addEventListener("DOMContentLoaded", () => {
