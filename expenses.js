@@ -1,4 +1,3 @@
-import { filterExpensesByMonth } from "./scripts.js";
 import { updateChart } from "./chart.js";
 import {
   clearForm,
@@ -86,4 +85,23 @@ export const displayExpenses = (expenses) => {
     item.textContent = `${expense.name} - ${expense.amount} usd.`;
     expensesList.appendChild(item);
   }
+};
+// Filter expenses by month
+export const filterExpensesByMonth = (month, year) => {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+  let expenses = users[currentUser].expenses;
+
+  let filteredExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date);
+    return (
+      expenseDate.getMonth() === month && expenseDate.getFullYear() === year
+    );
+  });
+
+  displayExpenses(filteredExpenses);
 };
