@@ -1,7 +1,13 @@
 "use strict";
 
 import { logout } from "./auth.js";
-import { showAlert, toggleForm } from "./ui.js";
+import { currentMonth, currentYear, showExpenses } from "./expenses.js";
+import {
+  loadCustomSelectOptions,
+  toggleAddExpenseForm,
+  toggleForm,
+  updateMonthDisplay,
+} from "./ui.js";
 
 // Authorization check
 document.addEventListener("DOMContentLoaded", () => {
@@ -17,50 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadCustomSelectOptions();
   updateMonthDisplay();
 });
-
-// Show expenses list
-const showExpenses = () => {
-  updateMonthDisplay();
-};
-
-// Add expense
-const addExpense = () => {
-  const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    showAlert("Please log in first");
-    return;
-  }
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses;
-
-  const name = document.getElementById("customInput").value;
-  const amount = Math.abs(document.getElementById("amount").value);
-  if (amount === 0) {
-    showAlert("Amount cannot be zero!");
-    return;
-  }
-  const date = new Date(currentYear, currentMonth, new Date().getDate())
-    .toISOString()
-    .split("T")[0];
-
-  let existingExpense = expenses.find(
-    (expense) => expense.name === name && expense.date === date
-  );
-  if (existingExpense) {
-    existingExpense.amount = amount + parseInt(existingExpense.amount);
-  } else {
-    expenses.push({ name: name, amount: amount, date: date });
-  }
-  localStorage.setItem("users", JSON.stringify(users));
-  filterExpensesByMonth(currentMonth, currentYear);
-  totalExpense();
-
-  customSelect(name);
-  clearForm();
-  closeAddExpenseForm();
-  updateChart();
-};
 
 // update chart
 const updateChart = () => {
@@ -90,101 +52,6 @@ const updateChart = () => {
     (expense) => expense.amount
   );
   chart.update();
-};
-
-// Custom select
-const customSelect = (newValue) => {
-  const dataList = document.getElementById("customSelect");
-
-  if (
-    newValue &&
-    !Array.from(dataList.options).some((opt) => opt.value === newValue)
-  ) {
-    let newOption = document.createElement("option");
-    newOption.value = newValue;
-    dataList.appendChild(newOption);
-
-    let customOptions = JSON.parse(localStorage.getItem("customOptions")) || [];
-    customOptions.push(newValue);
-    localStorage.setItem("customOptions", JSON.stringify(customOptions));
-  }
-};
-
-// Load custom options
-const loadCustomSelectOptions = () => {
-  const dataList = document.getElementById("customSelect");
-  let customOptions = JSON.parse(localStorage.getItem("customOptions")) || [];
-
-  customOptions.forEach((optionValue) => {
-    let newOption = document.createElement("option");
-    newOption.value = optionValue;
-    dataList.appendChild(newOption);
-  });
-};
-
-// Total expense calculation
-const totalExpense = () => {
-  const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    return;
-  }
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses;
-
-  let total = 0;
-  for (let i = 0; i < expenses.length; i++) {
-    const expenseDate = new Date(expenses[i].date);
-    if (
-      expenseDate.getMonth() === currentMonth &&
-      expenseDate.getFullYear() === currentYear
-    ) {
-      total += parseInt(expenses[i].amount);
-    }
-  }
-
-  let totalElement = document.getElementById("total");
-  totalElement.textContent = `Total: ${total} USD`;
-};
-
-// Toggle add expense form
-const toggleAddExpenseForm = () => {
-  const addExpenseForm = document.querySelector(".add-expense");
-  addExpenseForm.style.display =
-    addExpenseForm.style.display === "block" ? "none" : "block";
-};
-
-// Clear input form
-const clearForm = () => {
-  document.getElementById("customInput").value = "";
-  document.getElementById("amount").value = "";
-};
-
-export let currentMonth = new Date().getMonth();
-export let currentYear = new Date().getFullYear();
-
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-// Update month display
-const updateMonthDisplay = () => {
-  document.getElementById(
-    "month-name"
-  ).textContent = `${monthNames[currentMonth]} ${currentYear}`;
-  filterExpensesByMonth(currentMonth, currentYear);
-  totalExpense();
 };
 
 // Navigate to previous month
@@ -248,17 +115,17 @@ const displayExpenses = (expenses) => {
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("prev-month").addEventListener("click", prevMonth);
   document.getElementById("next-month").addEventListener("click", nextMonth);
-  document
-    .getElementById("toggle-add-expense")
-    .addEventListener("click", toggleAddExpenseForm);
-  document
-    .getElementById("addExpenseBtn")
-    .addEventListener("click", addExpense);
-  updateMonthDisplay();
+  // document
+  //   .getElementById("toggle-add-expense")
+  //   .addEventListener("click", toggleAddExpenseForm);
+  // document
+  //   .getElementById("addExpenseBtn")
+  //   .addEventListener("click", addExpense);
+  // updateMonthDisplay();
 
-  document
-    .getElementById("closeAddExpense")
-    .addEventListener("click", closeAddExpenseForm);
+  // document
+  //   .getElementById("closeAddExpense")
+  //   .addEventListener("click", closeAddExpenseForm);
 });
 
 // Extract amounts from user's expenses
@@ -305,26 +172,21 @@ export const chart = new Chart(ctx, {
   },
 });
 
-const closeAddExpenseForm = () => {
-  const addExpenseForm = document.querySelector(".add-expense");
-  addExpenseForm.style.display = "none";
-};
-
 export {
-  showExpenses,
-  addExpense,
+  // showExpenses,
+  // addExpense,
   updateChart,
-  customSelect,
-  loadCustomSelectOptions,
-  totalExpense,
+  // customSelect,
+  // loadCustomSelectOptions,
+  // totalExpense,
   toggleAddExpenseForm,
-  clearForm,
+  // clearForm,
   prevMonth,
   nextMonth,
   filterExpensesByMonth,
   displayExpenses,
   getUserAmounts,
   getUserNames,
-  updateMonthDisplay,
-  closeAddExpenseForm,
+  // updateMonthDisplay,
+  // closeAddExpenseForm,
 };
