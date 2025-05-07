@@ -29,6 +29,17 @@ document.addEventListener("DOMContentLoaded", () => {
   updateMonthDisplay();
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("registerBtn").addEventListener("click", register);
+  document.getElementById("loginBtn").addEventListener("click", login);
+  document.getElementById("logout-button").addEventListener("click", logout);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("openLoginBtn").addEventListener("click", toggleForm);
+  document.getElementById("closeLogin").addEventListener("click", showAlert);
+  document.getElementById("clearAllBtn").addEventListener("click", clearAll);
+});
 //Event listeners for month navigation
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("prev-month").addEventListener("click", prevMonth);
