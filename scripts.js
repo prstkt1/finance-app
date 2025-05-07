@@ -1,12 +1,6 @@
 "use strict";
 
-import {
-  showExpenses,
-  addExpense,
-  prevMonth,
-  nextMonth,
-  displayExpenses,
-} from "./expenses.js";
+import { showExpenses, addExpense, prevMonth, nextMonth } from "./expenses.js";
 import {
   loadCustomSelectOptions,
   toggleAddExpenseForm,
@@ -29,26 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   updateMonthDisplay();
 });
 
-// Filter expenses by month
-const filterExpensesByMonth = (month, year) => {
-  const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    return;
-  }
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses;
-
-  let filteredExpenses = expenses.filter((expense) => {
-    const expenseDate = new Date(expense.date);
-    return (
-      expenseDate.getMonth() === month && expenseDate.getFullYear() === year
-    );
-  });
-
-  displayExpenses(filteredExpenses);
-};
-
 //Event listeners for month navigation
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("prev-month").addEventListener("click", prevMonth);
@@ -65,22 +39,3 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("closeAddExpense")
     .addEventListener("click", closeAddExpenseForm);
 });
-
-export {
-  // showExpenses,
-  // addExpense,
-  // updateChart,
-  // customSelect,
-  // loadCustomSelectOptions,
-  // totalExpense,
-  // toggleAddExpenseForm,
-  // clearForm,
-  // prevMonth,
-  // nextMonth,
-  filterExpensesByMonth,
-  displayExpenses,
-  // getUserAmounts,
-  // getUserNames,
-  // updateMonthDisplay,
-  // closeAddExpenseForm,
-};
