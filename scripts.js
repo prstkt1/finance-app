@@ -1,6 +1,12 @@
 "use strict";
 
-import { showExpenses, addExpense, prevMonth, nextMonth } from "./expenses.js";
+import {
+  showExpenses,
+  addExpense,
+  prevMonth,
+  nextMonth,
+  displayExpenses,
+} from "./expenses.js";
 import {
   loadCustomSelectOptions,
   toggleAddExpenseForm,
@@ -41,19 +47,6 @@ const filterExpensesByMonth = (month, year) => {
   });
 
   displayExpenses(filteredExpenses);
-};
-
-// Display expenses
-const displayExpenses = (expenses) => {
-  let expensesList = document.getElementById("expenses");
-  expensesList.innerHTML = "";
-
-  for (let i = 0; i < expenses.length; i++) {
-    let expense = expenses[i];
-    let item = document.createElement("li");
-    item.textContent = `${expense.name} - ${expense.amount} usd.`;
-    expensesList.appendChild(item);
-  }
 };
 
 //Event listeners for month navigation
