@@ -1,4 +1,5 @@
-import { filterExpensesByMonth, displayExpenses } from "./scripts.js";
+import { filterExpensesByMonth } from "./scripts.js";
+import { displayExpenses } from "./expenses.js";
 import { chart } from "./chart.js";
 import { getUserNames } from "./chart.js";
 import { getUserAmounts } from "./chart.js";
