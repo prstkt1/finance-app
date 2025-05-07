@@ -17,6 +17,7 @@ import {
 } from "./ui.js";
 import { register, login, logout } from "./auth.js";
 import { clearAll } from "./helpers.js";
+import { updateChart } from "./chart.js";
 
 // Authorization check
 document.addEventListener("DOMContentLoaded", () => {
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   loadCustomSelectOptions();
   updateMonthDisplay();
+  updateChart();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
