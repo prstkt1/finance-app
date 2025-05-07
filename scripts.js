@@ -1,7 +1,14 @@
 "use strict";
 
 import { logout } from "./auth.js";
-import { currentMonth, currentYear, showExpenses } from "./expenses.js";
+import {
+  currentMonth,
+  currentYear,
+  showExpenses,
+  addExpense,
+  prevMonth,
+  nextMonth,
+} from "./expenses.js";
 import {
   loadCustomSelectOptions,
   toggleAddExpenseForm,
@@ -54,30 +61,6 @@ const updateChart = () => {
   chart.update();
 };
 
-// Navigate to previous month
-const prevMonth = () => {
-  if (currentMonth === 0) {
-    currentMonth = 11;
-    currentYear--;
-  } else {
-    currentMonth--;
-  }
-  updateMonthDisplay();
-  updateChart();
-};
-
-// Navigate to next month
-const nextMonth = () => {
-  if (currentMonth === 11) {
-    currentMonth = 0;
-    currentYear++;
-  } else {
-    currentMonth++;
-  }
-  updateMonthDisplay();
-  updateChart();
-};
-
 // Filter expenses by month
 const filterExpensesByMonth = (month, year) => {
   const currentUser = localStorage.getItem("currentUser");
@@ -115,13 +98,13 @@ const displayExpenses = (expenses) => {
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("prev-month").addEventListener("click", prevMonth);
   document.getElementById("next-month").addEventListener("click", nextMonth);
-  // document
-  //   .getElementById("toggle-add-expense")
-  //   .addEventListener("click", toggleAddExpenseForm);
-  // document
-  //   .getElementById("addExpenseBtn")
-  //   .addEventListener("click", addExpense);
-  // updateMonthDisplay();
+  document
+    .getElementById("toggle-add-expense")
+    .addEventListener("click", toggleAddExpenseForm);
+  document
+    .getElementById("addExpenseBtn")
+    .addEventListener("click", addExpense);
+  updateMonthDisplay();
 
   // document
   //   .getElementById("closeAddExpense")
