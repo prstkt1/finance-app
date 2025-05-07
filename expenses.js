@@ -1,4 +1,5 @@
-import { filterExpensesByMonth, updateChart } from "./scripts.js";
+import { filterExpensesByMonth } from "./scripts.js";
+import { updateChart } from "./chart.js";
 import {
   clearForm,
   closeAddExpenseForm,
