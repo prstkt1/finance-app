@@ -1,6 +1,12 @@
 "use strict";
 
-import { showExpenses, addExpense, prevMonth, nextMonth } from "./expenses.js";
+import {
+  showExpenses,
+  addExpense,
+  prevMonth,
+  nextMonth,
+  displayExpenses,
+} from "./expenses.js";
 import {
   loadCustomSelectOptions,
   toggleAddExpenseForm,
@@ -39,3 +45,22 @@ document.addEventListener("DOMContentLoaded", () => {
     .getElementById("closeAddExpense")
     .addEventListener("click", closeAddExpenseForm);
 });
+// Filter expenses by month
+export const filterExpensesByMonth = (month, year) => {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+  let expenses = users[currentUser].expenses;
+
+  let filteredExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date);
+    return (
+      expenseDate.getMonth() === month && expenseDate.getFullYear() === year
+    );
+  });
+
+  displayExpenses(filteredExpenses);
+};
