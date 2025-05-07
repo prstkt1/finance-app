@@ -94,7 +94,7 @@ export const displayExpenses = (expenses) => {
     deleteButton.addEventListener("click", () => {
       const currentUser = localStorage.getItem("currentUser");
       if (!currentUser) return;
-
+      if (!confirm("Are you sure you want to delete this expense?")) return;
       let users = JSON.parse(localStorage.getItem("users")) || {};
       let userExpenses = users[currentUser].expenses;
 
