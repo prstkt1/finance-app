@@ -75,3 +75,15 @@ export const nextMonth = () => {
   updateMonthDisplay();
   updateChart();
 };
+// Display expenses
+export const displayExpenses = (expenses) => {
+  let expensesList = document.getElementById("expenses");
+  expensesList.innerHTML = "";
+
+  for (let i = 0; i < expenses.length; i++) {
+    let expense = expenses[i];
+    let item = document.createElement("li");
+    item.textContent = `${expense.name} - ${expense.amount} usd.`;
+    expensesList.appendChild(item);
+  }
+};
