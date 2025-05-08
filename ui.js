@@ -79,12 +79,12 @@ export const monthNames = [
   "December",
 ];
 // Update month display
-export const updateMonthDisplay = () => {
+export const updateMonthDisplay = async () => {
   document.getElementById(
     "month-name"
   ).textContent = `${monthNames[currentMonth]} ${currentYear}`;
-  filterExpensesByMonth(currentMonth, currentYear);
-  totalExpense();
+  await filterExpensesByMonth(currentMonth, currentYear);
+  await totalExpense();
 };
 // Toggle add expense form
 export const toggleAddExpenseForm = () => {
@@ -93,26 +93,32 @@ export const toggleAddExpenseForm = () => {
     addExpenseForm.style.display === "block" ? "none" : "block";
 };
 // Total expense calculation
-export const totalExpense = () => {
+export const totalExpense = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses;
+  try {
+    const response = await fetch(
+      `http://localhost:3000/expenses?email=${encodeURIComponent(currentUser)}`
+    );
+    const expenses = await response.json();
 
-  let total = 0;
-  for (let i = 0; i < expenses.length; i++) {
-    const expenseDate = new Date(expenses[i].date);
-    if (
-      expenseDate.getMonth() === currentMonth &&
-      expenseDate.getFullYear() === currentYear
-    ) {
-      total += parseInt(expenses[i].amount);
+    let total = 0;
+    for (let i = 0; i < expenses.length; i++) {
+      const expenseDate = new Date(expenses[i].date);
+      if (
+        expenseDate.getMonth() === currentMonth &&
+        expenseDate.getFullYear() === currentYear
+      ) {
+        total += parseInt(expenses[i].amount);
+      }
     }
-  }
 
-  let totalElement = document.getElementById("total");
-  totalElement.textContent = `Total: ${total} USD`;
+    let totalElement = document.getElementById("total");
+    totalElement.textContent = `Total: ${total} USD`;
+  } catch (error) {
+    console.error("Error calculating total expenses:", error);
+  }
 };
