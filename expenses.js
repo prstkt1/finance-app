@@ -16,7 +16,7 @@ export const showExpenses = () => {
   updateMonthDisplay();
 };
 // Add expense
-export const addExpense = () => {
+export const addExpense = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
     showAlert("Please log in first");
@@ -36,22 +36,41 @@ export const addExpense = () => {
     .toISOString()
     .split("T")[0];
 
-  let existingExpense = expenses.find(
-    (expense) => expense.name === name && expense.date === date
-  );
-  if (existingExpense) {
-    existingExpense.amount = amount + parseInt(existingExpense.amount);
-  } else {
-    expenses.push({ name: name, amount: amount, date: date });
-  }
-  localStorage.setItem("users", JSON.stringify(users));
-  filterExpensesByMonth(currentMonth, currentYear);
-  totalExpense();
+  try {
+    // Send data to the server
+    const response = await fetch("http://localhost:3000/expense", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: currentUser, name, amount, date }),
+    });
 
-  customSelect(name);
-  clearForm();
-  closeAddExpenseForm();
-  updateChart();
+    if (!response.ok) {
+      const { message } = await response.json();
+      showAlert(message || "Failed to add expense!");
+      return;
+    }
+
+    // Save to localStorage if server addition is successful
+    let existingExpense = expenses.find(
+      (expense) => expense.name === name && expense.date === date
+    );
+    if (existingExpense) {
+      existingExpense.amount = amount + parseInt(existingExpense.amount);
+    } else {
+      expenses.push({ name: name, amount: amount, date: date });
+    }
+    localStorage.setItem("users", JSON.stringify(users));
+    filterExpensesByMonth(currentMonth, currentYear);
+    totalExpense();
+
+    customSelect(name);
+    clearForm();
+    closeAddExpenseForm();
+    updateChart();
+    showAlert("Expense added successfully!");
+  } catch (error) {
+    showAlert("An error occurred while adding the expense!");
+  }
 };
 // Navigate to previous month
 export const prevMonth = () => {
