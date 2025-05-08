@@ -23,9 +23,6 @@ export const addExpense = async () => {
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses;
-
   const name = document.getElementById("customInput").value;
   const amount = Math.abs(document.getElementById("amount").value);
   if (amount === 0) {
@@ -50,23 +47,13 @@ export const addExpense = async () => {
       return;
     }
 
-    // Save to localStorage if server addition is successful
-    let existingExpense = expenses.find(
-      (expense) => expense.name === name && expense.date === date
-    );
-    if (existingExpense) {
-      existingExpense.amount = amount + parseInt(existingExpense.amount);
-    } else {
-      expenses.push({ name: name, amount: amount, date: date });
-    }
-    localStorage.setItem("users", JSON.stringify(users));
-    filterExpensesByMonth(currentMonth, currentYear);
-    totalExpense();
-
+    // Update UI after successful addition
+    await filterExpensesByMonth(currentMonth, currentYear);
+    await totalExpense();
     customSelect(name);
     clearForm();
     closeAddExpenseForm();
-    updateChart();
+    await updateChart();
     showAlert("Expense added successfully!");
   } catch (error) {
     showAlert("An error occurred while adding the expense!");
@@ -95,39 +82,58 @@ export const nextMonth = () => {
   updateChart();
 };
 // Display expenses
-export const displayExpenses = (expenses) => {
-  let expensesList = document.getElementById("expenses");
-  expensesList.innerHTML = "";
+export const displayExpenses = async () => {
+  const currentUser = localStorage.getItem("currentUser");
+  if (!currentUser) {
+    showAlert("Please log in first");
+    return;
+  }
 
-  for (let i = 0; i < expenses.length; i++) {
-    let expense = expenses[i];
-    let item = document.createElement("li");
-    item.textContent = `${expense.name} - ${expense.amount} usd.`;
+  try {
+    const response = await fetch(
+      `http://localhost:3000/expenses?email=${encodeURIComponent(currentUser)}`
+    );
+    const expenses = await response.json();
 
-    //delete button
-    let deleteButton = document.createElement("button");
-    deleteButton.textContent = "✖";
-    deleteButton.classList.add("delete-expense-btn");
+    let expensesList = document.getElementById("expenses");
+    expensesList.innerHTML = "";
 
-    //delete functionality
-    deleteButton.addEventListener("click", () => {
-      const currentUser = localStorage.getItem("currentUser");
-      if (!currentUser) return;
-      if (!confirm("Are you sure you want to delete this expense?")) return;
-      let users = JSON.parse(localStorage.getItem("users")) || {};
-      let userExpenses = users[currentUser].expenses;
+    for (let i = 0; i < expenses.length; i++) {
+      let expense = expenses[i];
+      let item = document.createElement("li");
+      item.textContent = `${expense.name} - ${expense.amount} usd.`;
 
-      users[currentUser].expenses = userExpenses.filter(
-        (e) => !(e.name === expense.name && e.date === expense.date)
-      );
+      //delete button
+      let deleteButton = document.createElement("button");
+      deleteButton.textContent = "✖";
+      deleteButton.classList.add("delete-expense-btn");
 
-      localStorage.setItem("users", JSON.stringify(users));
-      filterExpensesByMonth(currentMonth, currentYear);
-      totalExpense();
-      updateChart();
-    });
+      //delete functionality
+      deleteButton.addEventListener("click", async () => {
+        if (!confirm("Are you sure you want to delete this expense?")) return;
 
-    item.appendChild(deleteButton);
-    expensesList.appendChild(item);
+        try {
+          const deleteResponse = await fetch(
+            `http://localhost:3000/expense/${expense.id}`,
+            { method: "DELETE" }
+          );
+
+          if (!deleteResponse.ok) {
+            showAlert("Failed to delete expense!");
+            return;
+          }
+
+          showAlert("Expense deleted successfully!");
+          displayExpenses(); // Refresh the list
+        } catch (error) {
+          showAlert("An error occurred while deleting the expense!");
+        }
+      });
+
+      item.appendChild(deleteButton);
+      expensesList.appendChild(item);
+    }
+  } catch (error) {
+    showAlert("An error occurred while fetching expenses!");
   }
 };
