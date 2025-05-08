@@ -5,38 +5,27 @@ export const register = async () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("pass").value;
 
-  let users = JSON.parse(localStorage.getItem("users")) || {};
+  try {
+    // Send data to the server
+    const response = await fetch("http://localhost:3000/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-  if (users[email]) {
-    showAlert("User already exists!");
-  } else {
-    try {
-      // Send data to the server
-      const response = await fetch("http://localhost:3000/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const { message } = await response.json();
-        showAlert(message || "Registration failed!");
-        return;
-      }
-
-      // Save to localStorage if server registration is successful
-      users[email] = {
-        password: password,
-        expenses: [],
-      };
-      localStorage.setItem("users", JSON.stringify(users));
-      showAlert("Registration successful!");
-      localStorage.setItem("currentUser", email);
-      toggleForm();
-      showExpenses();
-    } catch (error) {
-      showAlert("An error occurred during registration!");
+    if (!response.ok) {
+      const { message } = await response.json();
+      showAlert(message || "Registration failed!");
+      return;
     }
+
+    // Update UI after successful registration
+    showAlert("Registration successful!");
+    localStorage.setItem("currentUser", email);
+    toggleForm();
+    showExpenses();
+  } catch (error) {
+    showAlert("An error occurred during registration!");
   }
 };
 
