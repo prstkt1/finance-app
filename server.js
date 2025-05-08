@@ -89,6 +89,18 @@ app.get("/expenses", (req, res) => {
   });
 });
 
+// Delete an expense
+app.delete("/expense/:id", (req, res) => {
+  const { id } = req.params;
+  db.run("DELETE FROM expenses WHERE id = ?", [id], function (err) {
+    if (err) return res.status(500).json({ message: "Error deleting expense" });
+    if (this.changes === 0) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+    res.json({ message: "Expense deleted" });
+  });
+});
+
 app.get("/debug/users", (req, res) => {
   db.all("SELECT * FROM users", [], (err, rows) => {
     if (err) return res.status(500).json({ message: "Error fetching users" });
