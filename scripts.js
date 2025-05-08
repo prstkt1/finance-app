@@ -63,21 +63,21 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("click", closeAddExpenseForm);
 });
 // Filter expenses by month
-export const filterExpensesByMonth = (month, year) => {
+export const filterExpensesByMonth = async (month, year) => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses;
-
-  let filteredExpenses = expenses.filter((expense) => {
-    const expenseDate = new Date(expense.date);
-    return (
-      expenseDate.getMonth() === month && expenseDate.getFullYear() === year
+  try {
+    const response = await fetch(
+      `http://localhost:3000/expenses?email=${encodeURIComponent(
+        currentUser
+      )}&month=${month}&year=${year}`
     );
-  });
-
-  displayExpenses(filteredExpenses);
+    const filteredExpenses = await response.json();
+    displayExpenses(filteredExpenses);
+  } catch (error) {
+    console.error("Error fetching filtered expenses:", error);
+  }
 };
