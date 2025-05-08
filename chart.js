@@ -1,7 +1,7 @@
 import { currentMonth, currentYear } from "./expenses.js";
 
 // update chart
-export const updateChart = () => {
+export const updateChart = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
     chart.data.labels = [];
@@ -10,52 +10,70 @@ export const updateChart = () => {
     return;
   }
 
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses || [];
-
-  let filteredExpenses = expenses.filter((expense) => {
-    const expenseDate = new Date(expense.date);
-    return (
-      expenseDate.getMonth() === currentMonth &&
-      expenseDate.getFullYear() === currentYear
+  try {
+    const response = await fetch(
+      `http://localhost:3000/expenses?email=${encodeURIComponent(currentUser)}`
     );
-  });
+    const expenses = await response.json();
 
-  // Update chart data
-  chart.data.labels = filteredExpenses.map((expense) => expense.name);
-  chart.data.datasets[0].data = filteredExpenses.map(
-    (expense) => expense.amount
-  );
-  chart.update();
+    let filteredExpenses = expenses.filter((expense) => {
+      const expenseDate = new Date(expense.date);
+      return (
+        expenseDate.getMonth() === currentMonth &&
+        expenseDate.getFullYear() === currentYear
+      );
+    });
+
+    // Update chart data
+    chart.data.labels = filteredExpenses.map((expense) => expense.name);
+    chart.data.datasets[0].data = filteredExpenses.map(
+      (expense) => expense.amount
+    );
+    chart.update();
+  } catch (error) {
+    console.error("Error fetching expenses:", error);
+  }
 };
 // Extract amounts from user's expenses
-export const getUserAmounts = () => {
+export const getUserAmounts = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
     return [];
   }
 
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses || [];
-
-  return expenses.map((expense) => expense.amount);
+  try {
+    const response = await fetch(
+      `http://localhost:3000/expenses?email=${encodeURIComponent(currentUser)}`
+    );
+    const expenses = await response.json();
+    return expenses.map((expense) => expense.amount);
+  } catch (error) {
+    console.error("Error fetching user amounts:", error);
+    return [];
+  }
 };
 // Extract names from user's expenses
-export const getUserNames = () => {
+export const getUserNames = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
     return [];
   }
 
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-  let expenses = users[currentUser].expenses || [];
-
-  return expenses.map((expense) => expense.name);
+  try {
+    const response = await fetch(
+      `http://localhost:3000/expenses?email=${encodeURIComponent(currentUser)}`
+    );
+    const expenses = await response.json();
+    return expenses.map((expense) => expense.name);
+  } catch (error) {
+    console.error("Error fetching user names:", error);
+    return [];
+  }
 };
 // Expense chart
 export const ctx = document.getElementById("expenseChart").getContext("2d");
-export let pieData = getUserAmounts();
-export let pieLabels = getUserNames();
+export let pieData = await getUserAmounts();
+export let pieLabels = await getUserNames();
 export const chart = new Chart(ctx, {
   type: "pie",
   data: {
