@@ -1,6 +1,5 @@
 import { currentMonth, currentYear } from "./expenses.js";
 
-// update chart
 export const updateChart = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -24,7 +23,6 @@ export const updateChart = async () => {
       );
     });
 
-    // Update chart data
     chart.data.labels = filteredExpenses.map((expense) => expense.name);
     chart.data.datasets[0].data = filteredExpenses.map(
       (expense) => expense.amount
@@ -34,7 +32,7 @@ export const updateChart = async () => {
     console.error("Error fetching expenses:", error);
   }
 };
-// Extract amounts from user's expenses
+
 export const getUserAmounts = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -52,7 +50,7 @@ export const getUserAmounts = async () => {
     return [];
   }
 };
-// Extract names from user's expenses
+
 export const getUserNames = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -70,11 +68,10 @@ export const getUserNames = async () => {
     return [];
   }
 };
-// Expense chart
+
 export const ctx = document.getElementById("expenseChart").getContext("2d");
 export let chart;
 
-// Initialize chart data
 export const initializeChart = async () => {
   const pieData = await getUserAmounts();
   const pieLabels = await getUserNames();
