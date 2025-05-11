@@ -15,7 +15,7 @@ export let currentYear = new Date().getFullYear();
 export const showExpenses = () => {
   updateMonthDisplay();
 };
-// Add expense
+
 export const addExpense = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -34,7 +34,6 @@ export const addExpense = async () => {
     .split("T")[0];
 
   try {
-    // Send data to the server
     const response = await fetch("http://localhost:3000/expense", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -47,7 +46,6 @@ export const addExpense = async () => {
       return;
     }
 
-    // Update UI after successful addition
     await filterExpensesByMonth(currentMonth, currentYear);
     await totalExpense();
     customSelect(name);
@@ -59,7 +57,7 @@ export const addExpense = async () => {
     showAlert("An error occurred while adding the expense!");
   }
 };
-// Navigate to previous month
+
 export const prevMonth = () => {
   if (currentMonth === 0) {
     currentMonth = 11;
@@ -70,7 +68,7 @@ export const prevMonth = () => {
   updateMonthDisplay();
   updateChart();
 };
-// Navigate to next month
+
 export const nextMonth = () => {
   if (currentMonth === 11) {
     currentMonth = 0;
@@ -81,7 +79,7 @@ export const nextMonth = () => {
   updateMonthDisplay();
   updateChart();
 };
-// Display expenses
+
 export const displayExpenses = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -103,12 +101,10 @@ export const displayExpenses = async () => {
       let item = document.createElement("li");
       item.textContent = `${expense.name} - ${expense.amount} usd.`;
 
-      //delete button
       let deleteButton = document.createElement("button");
       deleteButton.textContent = "✖";
       deleteButton.classList.add("delete-expense-btn");
 
-      //delete functionality
       deleteButton.addEventListener("click", async () => {
         if (!confirm("Are you sure you want to delete this expense?")) return;
 
@@ -124,7 +120,7 @@ export const displayExpenses = async () => {
           }
 
           showAlert("Expense deleted successfully!");
-          displayExpenses(); // Refresh the list
+          displayExpenses();
         } catch (error) {
           showAlert("An error occurred while deleting the expense!");
         }
