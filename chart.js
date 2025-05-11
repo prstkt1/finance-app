@@ -72,18 +72,24 @@ export const getUserNames = async () => {
 };
 // Expense chart
 export const ctx = document.getElementById("expenseChart").getContext("2d");
-export let pieData = await getUserAmounts();
-export let pieLabels = await getUserNames();
-export const chart = new Chart(ctx, {
-  type: "pie",
-  data: {
-    labels: [...pieLabels],
-    datasets: [
-      {
-        label: "Расходы",
-        data: [...pieData],
-        backgroundColor: ["red"],
-      },
-    ],
-  },
-});
+export let chart;
+
+// Initialize chart data
+export const initializeChart = async () => {
+  const pieData = await getUserAmounts();
+  const pieLabels = await getUserNames();
+
+  chart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: [...pieLabels],
+      datasets: [
+        {
+          label: "Расходы",
+          data: [...pieData],
+          backgroundColor: ["red"],
+        },
+      ],
+    },
+  });
+};
