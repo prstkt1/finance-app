@@ -7,7 +7,6 @@ export const register = async () => {
   const password = document.getElementById("pass").value;
 
   try {
-    // Send data to the server
     const response = await fetch("http://localhost:3000/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -34,7 +33,6 @@ export const login = async () => {
   const password = document.getElementById("pass").value;
 
   try {
-    // Send login data to the server
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
