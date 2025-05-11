@@ -17,11 +17,11 @@ import {
 } from "./ui.js";
 import { register, login, logout } from "./auth.js";
 import { clearAll } from "./helpers.js";
-import { updateChart } from "./chart.js";
+import { updateChart, initializeChart } from "./chart.js";
 
-// Authorization check
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const currentUser = localStorage.getItem("currentUser");
+
   if (currentUser) {
     document.getElementById("login-button").style.display = "none";
     document.getElementById("logout-button").style.display = "block";
@@ -30,24 +30,24 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("login-button").style.display = "block";
     document.getElementById("logout-button").style.display = "none";
   }
+  try {
+    await initializeChart();
+    await updateChart();
+  } catch (error) {
+    console.error("Error initializing chart:", error);
+  }
+
   loadCustomSelectOptions();
   updateMonthDisplay();
-  updateChart();
-});
 
-document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("registerBtn").addEventListener("click", register);
   document.getElementById("loginBtn").addEventListener("click", login);
   document.getElementById("logout-button").addEventListener("click", logout);
-});
 
-document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("openLoginBtn").addEventListener("click", toggleForm);
   document.getElementById("closeLogin").addEventListener("click", showAlert);
   document.getElementById("clearAllBtn").addEventListener("click", clearAll);
-});
-//Event listeners for month navigation
-document.addEventListener("DOMContentLoaded", () => {
+
   document.getElementById("prev-month").addEventListener("click", prevMonth);
   document.getElementById("next-month").addEventListener("click", nextMonth);
   document
@@ -56,13 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("addExpenseBtn")
     .addEventListener("click", addExpense);
-  updateMonthDisplay();
-
   document
     .getElementById("closeAddExpense")
     .addEventListener("click", closeAddExpenseForm);
 });
-// Filter expenses by month
+
 export const filterExpensesByMonth = async (month, year) => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
