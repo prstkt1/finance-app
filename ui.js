@@ -26,12 +26,10 @@ export const showAlert = (message) => {
     alert.classList.add("hidden");
   }, 3000);
 };
-// Clear input form
 export const clearForm = () => {
   document.getElementById("customInput").value = "";
   document.getElementById("amount").value = "";
 };
-// Custom select
 export const customSelect = (newValue) => {
   const dataList = document.getElementById("customSelect");
 
@@ -48,7 +46,6 @@ export const customSelect = (newValue) => {
     localStorage.setItem("customOptions", JSON.stringify(customOptions));
   }
 };
-// Load custom options
 export const loadCustomSelectOptions = () => {
   const dataList = document.getElementById("customSelect");
   let customOptions = JSON.parse(localStorage.getItem("customOptions")) || [];
@@ -78,7 +75,6 @@ export const monthNames = [
   "November",
   "December",
 ];
-// Update month display
 export const updateMonthDisplay = async () => {
   document.getElementById(
     "month-name"
@@ -86,13 +82,11 @@ export const updateMonthDisplay = async () => {
   await filterExpensesByMonth(currentMonth, currentYear);
   await totalExpense();
 };
-// Toggle add expense form
 export const toggleAddExpenseForm = () => {
   const addExpenseForm = document.querySelector(".add-expense");
   addExpenseForm.style.display =
     addExpenseForm.style.display === "block" ? "none" : "block";
 };
-// Total expense calculation
 export const totalExpense = async () => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
@@ -120,5 +114,18 @@ export const totalExpense = async () => {
     totalElement.textContent = `Total: ${total} USD`;
   } catch (error) {
     console.error("Error calculating total expenses:", error);
+  }
+};
+
+export const buttonSwap = () => {
+  const currentUser = localStorage.getItem("currentUser");
+
+  if (currentUser) {
+    document.getElementById("login-button").style.display = "none";
+    document.getElementById("logout-button").style.display = "block";
+    showExpenses();
+  } else {
+    document.getElementById("login-button").style.display = "block";
+    document.getElementById("logout-button").style.display = "none";
   }
 };
