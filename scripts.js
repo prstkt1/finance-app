@@ -14,22 +14,13 @@ import {
   closeAddExpenseForm,
   toggleForm,
   showAlert,
+  buttonSwap,
 } from "./ui.js";
 import { register, login, logout } from "./auth.js";
 import { clearAll } from "./helpers.js";
 import { updateChart, initializeChart } from "./chart.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const currentUser = localStorage.getItem("currentUser");
-
-  if (currentUser) {
-    document.getElementById("login-button").style.display = "none";
-    document.getElementById("logout-button").style.display = "block";
-    showExpenses();
-  } else {
-    document.getElementById("login-button").style.display = "block";
-    document.getElementById("logout-button").style.display = "none";
-  }
   try {
     await initializeChart();
     await updateChart();
@@ -59,6 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document
     .getElementById("closeAddExpense")
     .addEventListener("click", closeAddExpenseForm);
+  buttonSwap();
 });
 
 export const filterExpensesByMonth = async (month, year) => {
