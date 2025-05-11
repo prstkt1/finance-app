@@ -1,3 +1,4 @@
+import { updateChart } from "./chart.js";
 import { showExpenses } from "./expenses.js";
 import { showAlert, toggleForm } from "./ui.js";
 
@@ -19,7 +20,6 @@ export const register = async () => {
       return;
     }
 
-    // Update UI after successful registration
     showAlert("Registration successful!");
     localStorage.setItem("currentUser", email);
     toggleForm();
@@ -51,6 +51,7 @@ export const login = async () => {
       localStorage.setItem("currentUser", email);
       toggleForm();
       showExpenses();
+      updateChart();
     }
   } catch (error) {
     showAlert("An error occurred during login!");
