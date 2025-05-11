@@ -26,6 +26,7 @@ export const showAlert = (message) => {
     alert.classList.add("hidden");
   }, 3000);
 };
+
 export const clearForm = () => {
   document.getElementById("customInput").value = "";
   document.getElementById("amount").value = "";
@@ -123,7 +124,6 @@ export const buttonSwap = () => {
   if (currentUser) {
     document.getElementById("login-button").style.display = "none";
     document.getElementById("logout-button").style.display = "block";
-    showExpenses();
   } else {
     document.getElementById("login-button").style.display = "block";
     document.getElementById("logout-button").style.display = "none";
