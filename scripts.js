@@ -6,7 +6,7 @@ import {
   prevMonth,
   nextMonth,
   displayExpenses,
-} from "./expenses.js";
+} from "./expenses-ui.js";
 import {
   loadCustomSelectOptions,
   toggleAddExpenseForm,
