@@ -4,12 +4,35 @@ const db = require("../db");
 
 router.post("/", (req, res) => {
   const { email, name, amount, date } = req.body;
-  db.run(
-    "INSERT INTO expenses (email, name, amount, date) VALUES (?, ?, ?, ?)",
-    [email, name, amount, date],
-    function (err) {
+  db.get(
+    "SELECT id, amount FROM expenses WHERE email = ? AND name = ? AND date = ?",
+    [email, name, date],
+    function (err, row) {
       if (err) return res.status(500).json({ message: "Error saving expense" });
-      res.json({ message: "Expense saved" });
+      if (row) {
+        const newAmount = row.amount + amount;
+        db.run(
+          "UPDATE expenses SET amount = ? WHERE id = ?",
+          [newAmount, row.id],
+          function (err2) {
+            if (err2)
+              return res
+                .status(500)
+                .json({ message: "Error updating expense" });
+            res.json({ message: "Expense updated" });
+          }
+        );
+      } else {
+        db.run(
+          "INSERT INTO expenses (email, name, amount, date) VALUES (?, ?, ?, ?)",
+          [email, name, amount, date],
+          function (err3) {
+            if (err3)
+              return res.status(500).json({ message: "Error saving expense" });
+            res.json({ message: "Expense saved" });
+          }
+        );
+      }
     }
   );
 });
