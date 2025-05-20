@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-// Добавить расход
 router.post("/", (req, res) => {
   const { email, name, amount, date } = req.body;
   db.run(
@@ -15,7 +14,6 @@ router.post("/", (req, res) => {
   );
 });
 
-// Получить все расходы пользователя
 router.get("/", (req, res) => {
   const { email } = req.query;
   db.all("SELECT * FROM expenses WHERE email = ?", [email], (err, rows) => {
@@ -25,7 +23,6 @@ router.get("/", (req, res) => {
   });
 });
 
-// Удалить расход
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
   db.run("DELETE FROM expenses WHERE id = ?", [id], function (err) {
@@ -37,7 +34,6 @@ router.delete("/:id", (req, res) => {
   });
 });
 
-// Для отладки (необязательно)
 router.get("/debug", (req, res) => {
   db.all("SELECT * FROM expenses", [], (err, rows) => {
     if (err)
