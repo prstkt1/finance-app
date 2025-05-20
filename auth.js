@@ -1,5 +1,5 @@
 import { updateChart } from "./chart.js";
-import { showExpenses } from "./expenses.js";
+import { showExpenses } from "./expenses-ui.js";
 import { showAlert, toggleForm } from "./ui.js";
 
 export const register = async () => {
