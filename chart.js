@@ -1,4 +1,4 @@
-import { currentMonth, currentYear } from "./expenses.js";
+import { currentMonth, currentYear } from "./expenses-ui.js";
 
 export const updateChart = async () => {
   const currentUser = localStorage.getItem("currentUser");
