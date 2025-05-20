@@ -34,7 +34,7 @@ export const addExpense = async () => {
     .split("T")[0];
 
   try {
-    const response = await fetch("http://localhost:3000/expense", {
+    const response = await fetch("http://localhost:3000/expenses", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: currentUser, name, amount, date }),
@@ -110,7 +110,7 @@ export const displayExpenses = async () => {
 
         try {
           const deleteResponse = await fetch(
-            `http://localhost:3000/expense/${expense.id}`,
+            `http://localhost:3000/expenses/${expense.id}`,
             { method: "DELETE" }
           );
 
