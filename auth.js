@@ -7,7 +7,7 @@ export const register = async () => {
   const password = document.getElementById("pass").value;
 
   try {
-    const response = await fetch("http://localhost:3000/register", {
+    const response = await fetch("http://localhost:3000/users/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -33,7 +33,7 @@ export const login = async () => {
   const password = document.getElementById("pass").value;
 
   try {
-    const response = await fetch("http://localhost:3000/login", {
+    const response = await fetch("http://localhost:3000/users/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
