@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 
-// Регистрация
 router.post("/register", (req, res) => {
   const { email, password } = req.body;
   db.run(
@@ -19,7 +18,6 @@ router.post("/register", (req, res) => {
   );
 });
 
-// Логин
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   db.get(
@@ -34,7 +32,6 @@ router.post("/login", (req, res) => {
   );
 });
 
-// Для отладки (необязательно)
 router.get("/debug", (req, res) => {
   db.all("SELECT * FROM users", [], (err, rows) => {
     if (err) return res.status(500).json({ message: "Error fetching users" });
