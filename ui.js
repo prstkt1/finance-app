@@ -1,7 +1,7 @@
 import { clearAll } from "./helpers.js";
 import { filterExpensesByMonth } from "./scripts.js";
-import { currentYear } from "./expenses.js";
-import { currentMonth } from "./expenses.js";
+import { currentYear } from "./expenses-ui.js";
+import { currentMonth } from "./expenses-ui.js";
 
 export const toggleForm = () => {
   let loginForm = document.getElementById("log-in");
