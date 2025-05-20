@@ -93,11 +93,17 @@ export const displayExpenses = async () => {
     );
     const expenses = await response.json();
 
+    const filteredExpenses = expenses.filter(
+      (expense) =>
+        new Date(expense.date).getMonth() === currentMonth &&
+        new Date(expense.date).getFullYear() === currentYear
+    );
+
     let expensesList = document.getElementById("expenses");
     expensesList.innerHTML = "";
 
-    for (let i = 0; i < expenses.length; i++) {
-      let expense = expenses[i];
+    for (let i = 0; i < filteredExpenses.length; i++) {
+      let expense = filteredExpenses[i];
       let item = document.createElement("li");
       item.textContent = `${expense.name} - ${expense.amount} usd.`;
 
