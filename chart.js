@@ -1,3 +1,4 @@
+import { fetchExpenses, getChartData } from "./expensesData.js";
 import { currentMonth, currentYear } from "./expenses-ui.js";
 
 export const updateChart = async () => {
@@ -10,23 +11,11 @@ export const updateChart = async () => {
   }
 
   try {
-    const response = await fetch(
-      `http://localhost:3000/expenses?email=${encodeURIComponent(currentUser)}`
-    );
-    const expenses = await response.json();
+    const expenses = await fetchExpenses(currentUser);
+    const { labels, data } = getChartData(expenses, currentMonth, currentYear);
 
-    let filteredExpenses = expenses.filter((expense) => {
-      const expenseDate = new Date(expense.date);
-      return (
-        expenseDate.getMonth() === currentMonth &&
-        expenseDate.getFullYear() === currentYear
-      );
-    });
-
-    chart.data.labels = filteredExpenses.map((expense) => expense.name);
-    chart.data.datasets[0].data = filteredExpenses.map(
-      (expense) => expense.amount
-    );
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = data;
     chart.update();
   } catch (error) {
     console.error("Error fetching expenses:", error);
