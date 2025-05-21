@@ -1,6 +1,7 @@
 import { filterExpensesByMonth } from "./scripts.js";
 import { currentYear } from "./expenses-ui.js";
 import { currentMonth } from "./expenses-ui.js";
+import { fetchExpenses, calculateTotal } from "./expensesData.js";
 
 export const toggleForm = () => {
   let loginForm = document.getElementById("log-in");
@@ -89,29 +90,12 @@ export const toggleAddExpenseForm = () => {
 };
 export const totalExpense = async () => {
   const currentUser = localStorage.getItem("currentUser");
-  if (!currentUser) {
-    return;
-  }
+  if (!currentUser) return;
 
   try {
-    const response = await fetch(
-      `http://localhost:3000/expenses?email=${encodeURIComponent(currentUser)}`
-    );
-    const expenses = await response.json();
-
-    let total = 0;
-    for (let i = 0; i < expenses.length; i++) {
-      const expenseDate = new Date(expenses[i].date);
-      if (
-        expenseDate.getMonth() === currentMonth &&
-        expenseDate.getFullYear() === currentYear
-      ) {
-        total += parseInt(expenses[i].amount);
-      }
-    }
-
-    let totalElement = document.getElementById("total");
-    totalElement.textContent = `Total: ${total} USD`;
+    const expenses = await fetchExpenses(currentUser);
+    const total = calculateTotal(expenses, currentMonth, currentYear);
+    document.getElementById("total").textContent = `Total: ${total} USD`;
   } catch (error) {
     console.error("Error calculating total expenses:", error);
   }
