@@ -1,5 +1,5 @@
 import { updateChart } from "./chart.js";
-import { filterExpensesByMonth } from "./scripts.js";
+import { fetchExpenses, filterExpensesByMonth } from "./expensesData.js";
 import {
   clearForm,
   closeAddExpenseForm,
@@ -88,15 +88,11 @@ export const displayExpenses = async () => {
   }
 
   try {
-    const response = await fetch(
-      `http://localhost:3000/expenses?email=${encodeURIComponent(currentUser)}`
-    );
-    const expenses = await response.json();
-
-    const filteredExpenses = expenses.filter(
-      (expense) =>
-        new Date(expense.date).getMonth() === currentMonth &&
-        new Date(expense.date).getFullYear() === currentYear
+    const expenses = await fetchExpenses(currentUser);
+    const filteredExpenses = filterExpensesByMonth(
+      expenses,
+      currentMonth,
+      currentYear
     );
 
     let expensesList = document.getElementById("expenses");
