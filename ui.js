@@ -1,4 +1,3 @@
-import { clearAll } from "./helpers.js";
 import { filterExpensesByMonth } from "./scripts.js";
 import { currentYear } from "./expenses-ui.js";
 import { currentMonth } from "./expenses-ui.js";
