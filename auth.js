@@ -1,17 +1,14 @@
 import { updateChart } from "./chart.js";
 import { showExpenses } from "./expenses-ui.js";
 import { showAlert, toggleForm } from "./ui.js";
+import { registerUser, loginUser } from "./authApi.js";
 
 export const register = async () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("pass").value;
 
   try {
-    const response = await fetch("http://localhost:3000/users/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await registerUser(email, password);
 
     if (!response.ok) {
       const { message } = await response.json();
@@ -33,11 +30,7 @@ export const login = async () => {
   const password = document.getElementById("pass").value;
 
   try {
-    const response = await fetch("http://localhost:3000/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await loginUser(email, password);
 
     if (!response.ok) {
       const { message } = await response.json();
