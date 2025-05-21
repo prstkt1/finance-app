@@ -1,45 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../db");
+const expenseService = require("../services/expenseService");
 
 router.post("/", (req, res) => {
   const { email, name, amount, date } = req.body;
-  db.get(
-    "SELECT id, amount FROM expenses WHERE email = ? AND name = ? AND date = ?",
-    [email, name, date],
-    function (err, row) {
-      if (err) return res.status(500).json({ message: "Error saving expense" });
-      if (row) {
-        const newAmount = row.amount + amount;
-        db.run(
-          "UPDATE expenses SET amount = ? WHERE id = ?",
-          [newAmount, row.id],
-          function (err2) {
-            if (err2)
-              return res
-                .status(500)
-                .json({ message: "Error updating expense" });
-            res.json({ message: "Expense updated" });
-          }
-        );
-      } else {
-        db.run(
-          "INSERT INTO expenses (email, name, amount, date) VALUES (?, ?, ?, ?)",
-          [email, name, amount, date],
-          function (err3) {
-            if (err3)
-              return res.status(500).json({ message: "Error saving expense" });
-            res.json({ message: "Expense saved" });
-          }
-        );
-      }
-    }
-  );
+  expenseService.createOrUpdateExpense(email, name, amount, date, (err) => {
+    if (err) return res.status(500).json({ message: "Error saving expense" });
+    res.json({ message: "Expense saved or updated" });
+  });
 });
 
 router.get("/", (req, res) => {
   const { email } = req.query;
-  db.all("SELECT * FROM expenses WHERE email = ?", [email], (err, rows) => {
+  expenseService.getExpensesByEmail(email, (err, rows) => {
     if (err)
       return res.status(500).json({ message: "Error fetching expenses" });
     res.json(rows);
@@ -48,20 +21,9 @@ router.get("/", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
-  db.run("DELETE FROM expenses WHERE id = ?", [id], function (err) {
+  expenseService.deleteExpenseById(id, function (err) {
     if (err) return res.status(500).json({ message: "Error deleting expense" });
-    if (this.changes === 0) {
-      return res.status(404).json({ message: "Expense not found" });
-    }
     res.json({ message: "Expense deleted" });
-  });
-});
-
-router.get("/debug", (req, res) => {
-  db.all("SELECT * FROM expenses", [], (err, rows) => {
-    if (err)
-      return res.status(500).json({ message: "Error fetching expenses" });
-    res.json(rows);
   });
 });
 
