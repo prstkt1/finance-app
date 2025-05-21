@@ -1,7 +1,4 @@
-"use strict";
-
 import {
-  showExpenses,
   addExpense,
   prevMonth,
   nextMonth,
