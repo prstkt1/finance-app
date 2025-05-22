@@ -1,4 +1,4 @@
-import { filterExpensesByMonth } from "./scripts.js";
+import { fetchMonthlyExpenses } from "./scripts.js";
 import { currentYear } from "./expenses-ui.js";
 import { currentMonth } from "./expenses-ui.js";
 import { fetchExpenses, calculateTotal } from "./expensesData.js";
@@ -80,7 +80,7 @@ export const updateMonthDisplay = async () => {
   document.getElementById(
     "month-name"
   ).textContent = `${monthNames[currentMonth]} ${currentYear}`;
-  await filterExpensesByMonth(currentMonth, currentYear);
+  await fetchMonthlyExpenses(currentMonth, currentYear);
   await totalExpense();
 };
 export const toggleAddExpenseForm = () => {
