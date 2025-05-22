@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   buttonSwap();
 });
 
-export const filterExpensesByMonth = async (month, year) => {
+export const fetchMonthlyExpenses = async (month, year) => {
   const currentUser = localStorage.getItem("currentUser");
   if (!currentUser) {
     return;
@@ -63,7 +63,7 @@ export const filterExpensesByMonth = async (month, year) => {
       )}&month=${month}&year=${year}`
     );
     const filteredExpenses = await response.json();
-    displayExpenses(filteredExpenses);
+    await displayExpenses(filteredExpenses);
   } catch (error) {
     console.error("Error fetching filtered expenses:", error);
   }
