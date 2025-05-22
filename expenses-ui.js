@@ -122,7 +122,7 @@ export const displayExpenses = async () => {
           }
 
           showAlert("Expense deleted successfully!");
-          displayExpenses();
+          await displayExpenses();
         } catch (error) {
           showAlert("An error occurred while deleting the expense!");
         }
